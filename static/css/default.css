@@ -1,0 +1,71 @@
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter/Inter-VariableFont_slnt\,wght.ttf');
+}
+
+body{
+    --background:black;
+    --background2:#000C20;
+    --text:#FFFFFF;
+    --primary:#2d6bce;
+    --accent:#B1CDF7;
+    --secondary:#052250;
+    background: var(--background);
+    color: var(--text);
+    font-size: calc(10px + 1vw);
+    font-family: 'Inter', sans-serif;
+}
+
+.default-button{
+    background: var(--primary);
+    color: var(--text);
+    border: 0.1em solid var(--secondary);
+    border-radius: 0.5em;
+    padding: 0.3em 2em;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+h2{
+    font-size: 3rem;
+    color: var(--text);
+    margin: 0;
+}
+
+.hero{
+    font-size: 1rem;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    gap:1em;
+    height:100vh;
+    background:url('../assets/default/bg.png');
+    background-size:cover;
+}
+
+
+.hero>h1{
+    font-size:5em;
+    color:var(--text);
+    text-align:center;
+    margin:0;
+}
+.hero>h2{
+    font-size:2em;
+    color:var(--accent);
+    text-align:center;
+    margin:0;
+}
+
+.hero>.default-button{
+    margin-top:0.5em;
+}
+
+.hero>img{
+    max-height: 40%;
+    max-width:40%;
+}

@@ -1,0 +1,121 @@
+
+
+.details{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "header header"
+                         "datetime location";
+    justify-content:center;
+    align-items:end;
+    gap:1em;
+}
+
+
+
+.details__datetime{
+    grid-area:datetime;
+}
+
+.details__location{
+    grid-area:location;
+}
+
+.details>h2{
+    width:100%;
+}
+
+.details>div{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:0.5em;
+    width:100%;
+}
+
+.details>div>p{
+    font-size:1.5em;
+    color:var(--text);
+    text-align:center;
+    margin:0;
+    font-weight: bold;
+}
+
+.time{
+    color:var(--accent) !important;
+    font-size: 1em !important;
+    margin:0.7rem 0 !important;
+}
+
+.mt_hotel{
+    margin-bottom:3rem;
+
+}
+
+section{
+    padding:1.5rem 3em;
+    box-sizing: border-box;
+}
+
+.storyline,.scavenger-hunt,.booth-games{
+    background:var(--background2);
+}
+
+.scavenger-hunt{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "header header"
+                         "desc1 image1"
+                         "image2 desc2";
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+.scavenger-hunt>h2{
+    grid-area:header;
+    width:100%;
+}
+.scavenger-hunt p{
+    width:70%;
+    text-align: center;
+}
+.desc1{
+    grid-area:desc1;
+}
+.desc2{
+    grid-area:desc2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.image1{
+    grid-area:image1;
+}
+.image2{
+    grid-area:image2;
+}
+
+.booth-games{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "header header"
+                         "desc3 image3";
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.booth-games>h2{
+    grid-area:header;
+    width:100%;
+}
+
+.image3{
+    grid-area:image3;
+}
+
+.desc3{
+    grid-area:desc3;
+    width:70%;
+    text-align: center;
+}
