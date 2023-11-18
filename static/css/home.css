@@ -53,13 +53,10 @@
 }
 
 section{
-    padding:1.5rem 3em;
+    padding:3rem 3em;
     box-sizing: border-box;
 }
 
-.storyline,.scavenger-hunt,.booth-games{
-    background:var(--background2);
-}
 
 .scavenger-hunt{
     display:grid;
@@ -70,6 +67,7 @@ section{
     align-items: center;
     justify-content: center;
     justify-items: center;
+    row-gap: 10rem;
 }
 .scavenger-hunt>h2{
     grid-area:header;
@@ -118,4 +116,68 @@ section{
     grid-area:desc3;
     width:70%;
     text-align: center;
+}
+
+.general-details{
+    background:url("../assets/default/bg2.png");
+    background-size:cover;
+}
+
+.programmes{
+    background:url("../assets/default/bg3.png");
+    background-size:cover;
+}
+
+.dress-code{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr 1fr;
+    row-gap: 10rem;
+    grid-template-areas: "header header"
+                         "dresscode dresscodeimg"
+                         "masqueradeimg masquerade";
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.dress-code>h2{
+    grid-area:header;
+    width:100%;
+}
+.dress-code-description{
+    grid-area: dresscode;
+    
+}
+
+.dress-code-example{
+    grid-area: dresscodeimg;
+    max-width: 70%;
+}
+
+.masquerade-description{
+    grid-area: masquerade;
+}
+
+.masquerade-example{
+    grid-area: masqueradeimg;
+    max-width: 70%;
+
+}
+
+.dress-code>p{
+    width:70%;
+    text-align: center;
+}
+
+.img2{
+    max-width: 70%;
+}
+
+.img3{
+    max-width: 70%;
+}
+
+p{
+    font-size:1.5rem;
 }
