@@ -1,10 +1,9 @@
-<script src = "static/js/nav.js"></script>
     <nav class = "nav" id = "nav" >
 
-        <a href = "index.php?filename=Home" class = "nav__cell"  id = "home">
+        <a href = "index.php" class = "nav__cell"  id = "home">
             <input type = "button" value = "Home" class = "nav__btn">
         </a>
-        <a href = "index.php" class = "nav__cell" id = "Ticket">                    
+        <a href = "index.php?filename=ticket" class = "nav__cell" id = "Ticket">                    
             <input type = "button"  value = "Ticket" class = "nav__btn">
             
         </a>

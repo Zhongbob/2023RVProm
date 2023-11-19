@@ -26,6 +26,9 @@ if ($logInInfo && !$guestInfo) {
         case "voting":
             include('templates/voting.tpl.php');
             break;
+        case "ticket":
+            include('templates/ticket.tpl.php');
+            break;
         default:
             include('templates/home.tpl.php');
             break;

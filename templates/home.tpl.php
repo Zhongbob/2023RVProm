@@ -1,5 +1,6 @@
 <?php  require_once("backend/Login/loginInitialise.inc.php"); ?>
 <link rel="stylesheet" href="static/css/home.css?<?php echo time(); ?>">
+<meta name="pageTitle" content="home">
 </head>
 
 <body style="height: 100%;">

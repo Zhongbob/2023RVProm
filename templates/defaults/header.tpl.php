@@ -13,7 +13,6 @@
         <link rel="icon" href="static/img/logo.ico">
         
         <meta name="csrf_token" content="<?php echo createToken(); ?>">
-
         <!-- HTML Meta Tags -->
         <meta property = "og:image" content = "https://rdev.x10.mx/static/img/Iconlogo.jpeg">
         <meta property="og:title" content="RdeV">

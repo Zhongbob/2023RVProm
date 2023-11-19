@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="static/css/voting.css?<?php echo time(); ?>">
+<meta name="pageTitle" content="voting">
+
 </head>
 
 <body style="height: 100%;">

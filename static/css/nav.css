@@ -9,13 +9,15 @@
 	/* opacity: 1; */
 	font-size: 2rem;
 	color: var(--text);
+	cursor:pointer;
+
 }
 
-.nav__cell:not([data-selected]):not(.nav__cell--pfp):not(.nav__cell--rdev):hover {
+.nav__cell:not(.active):not(.nav__cell--pfp):not(.nav__cell--rdev):hover {
 	filter: brightness(80%);
 }
 
-.nav__cell[data-selected] {
+.nav__cell.active {
 	/* background:var(--secondarycolor1); */
 	border-top: 0.1em solid var(--text);
 	box-shadow: 0 -2px 0 var(--text);
@@ -35,6 +37,7 @@ table tr td {
 	text-decoration: none;
 
 }
+
 
 .nav__cell-image:hover {
 	filter: brightness(80%);

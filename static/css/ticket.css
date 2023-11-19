@@ -1,0 +1,32 @@
+#guest-code{
+    padding:0.3rem;
+    background-color: white;
+    aspect-ratio: 1/1;
+    height:50%;
+}
+#guest-code>img{
+    width:100%;
+    height:100%;
+}
+.main{
+    position:relative;
+    margin:0 5rem;
+}
+
+.ticket{
+    width:100%;
+}
+
+.guest-code__container{
+    width:28%;
+    top:0;
+
+    right:0;
+    position:absolute;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:0.5rem;
+}

@@ -133,17 +133,18 @@ function rememberMe($conn)
 }
 
 function getGuestInfo($conn,$userId){
-    $sql = "SELECT `class`,`studentName`,`tableNo`,`meal` FROM `guests`
+    $sql = "SELECT `guests`.`guestId`,`class`,`studentName`,`tableNo`,`meal` FROM `guests`
             JOIN `guestuserjunction` ON `guestuserjunction`.`guestId` = `guests`.`guestId`
             WHERE `userId` = ?";
     $cursor = prepared_query($conn, $sql, [$userId,], 'i');
-    $cursor->bind_result($class,$studentName,$tableNo,$meal);
+    $cursor->bind_result($guestId,$class,$studentName,$tableNo,$meal);
     if (!($cursor->fetch()))
         return false;
     return [
             "class"=>$class, 
             "studentName"=>$studentName, 
             "tableNo"=>$tableNo,
-            "meal"=>$meal];
+            "meal"=>$meal,
+            "guestId"=>$guestId];
 }
 ?>
