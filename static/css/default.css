@@ -15,6 +15,7 @@ body{
     font-size: calc(10px + 1vw);
     font-family: 'Inter', sans-serif;
     line-height: 1.5em;
+    margin:0;
 }
 
 .default-button{
@@ -31,7 +32,7 @@ body{
 
 h2{
     font-size: 3rem;
-    color: var(--text);
+    color: var(--accent);
     margin: 0;
 }
 
@@ -54,9 +55,10 @@ h2{
     color:var(--text);
     text-align:center;
     margin:0;
-    animation: fadeY 1s ease-in-out backwards;
-    animation-delay: 0.5s;
+    animation: fadeY 0.5s ease-in-out backwards;
+    animation-delay: 0.2s;
     --amt:0.2em;
+    line-height: 1em;
 
 }
 .hero>h2{
@@ -64,32 +66,57 @@ h2{
     color:var(--accent);
     text-align:center;
     margin:0;
-    animation: fadeY 1s ease-in-out backwards;
+    animation: fadeY 0.5s ease-in-out backwards;
     --amt:0.2em;
-    animation-delay: 1.5s;
+    animation-delay: 0.5s;
 }
 
 .hero>.default-button{
     margin-top:0.5em;
-    animation: fadeY 1s ease-in-out backwards;
+    animation: fadeY 0.5s ease-in-out backwards;
     --amt:0.2em;
-    animation-delay: 2s;
+    animation-delay: 0.7s;
 }
 
 .hero>img{
     max-height: 40%;
     max-width:40%;
-    animation: fadeY 1s ease-in-out;
+    animation: fadeY 0.5s ease-in-out;
     --amt:-1em;
 }
 
 @keyframes fadeY {
     0% {
         opacity: 0;
-        transform: translateY(max(var(--amt)));
+        transform: translateY(var(--amt));
     }
     100% {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@keyframes fadeX {
+    0% {
+        opacity: 0;
+        transform: translateX(var(--amt));
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+b,.highlight{
+    color:var(--accent);
+}
+
+.hidden{
+    display:none !important;
+}
+button,select{
+    transition:filter 0.3s ease-in-out;
+}
+button:hover,select:hover{
+    filter:brightness(1.2);
 }

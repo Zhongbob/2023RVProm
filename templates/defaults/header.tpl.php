@@ -11,6 +11,8 @@
         <link rel="stylesheet" href="static/css/default.css?<?php echo time(); ?>">
         <meta name="description" content="We are a group of students in River Valley High School under Senior Infocomm Club Creating a new Sub CCA focusing on teaching coding and 2 of it’s fun and useful applications, Web and Game Development">
         <link rel="icon" href="static/img/logo.ico">
+        
+        <meta name="csrf_token" content="<?php echo createToken(); ?>">
 
         <!-- HTML Meta Tags -->
         <meta property = "og:image" content = "https://rdev.x10.mx/static/img/Iconlogo.jpeg">

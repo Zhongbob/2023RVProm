@@ -67,7 +67,7 @@ section{
     align-items: center;
     justify-content: center;
     justify-items: center;
-    row-gap: 10rem;
+    row-gap: 5rem;
 }
 .scavenger-hunt>h2{
     grid-area:header;
@@ -119,23 +119,47 @@ section{
 }
 
 .general-details{
+    position:relative;
+}
+.general-details>.bg{
     background:url("../assets/default/bg2.png");
     background-size:cover;
+    filter:grayscale(100%);
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index: -1;
+    opacity: 0.7;
+
 }
 
 .programmes{
-    background:url("../assets/default/bg3.png");
+    position:relative;
+}
+.programmes>.bg{
+
+    background:url("../assets/default/bg3.png"), black 100% / cover no-repeat;;
     background-size:cover;
+    position:absolute;
+    opacity:0.7;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index: -1;
 }
 
 .dress-code{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr 1fr;
-    row-gap: 10rem;
+    row-gap: 5rem;
     grid-template-areas: "header header"
                          "dresscode dresscodeimg"
-                         "masqueradeimg masquerade";
+                         "masqueradeimg masquerade"
+                         "masqueradevid masqueradevid";
     align-items: center;
     justify-content: center;
     justify-items: center;
@@ -179,5 +203,46 @@ section{
 }
 
 p{
-    font-size:1.5rem;
+    font-size:2rem;
+}
+
+.fade-left{
+    --amt:1em;
+    animation: fadeX 0.5s ease-in-out backwards;
+}
+
+.fade-right{
+    --amt:-1em;
+    animation: fadeX 0.5s ease-in-out backwards;
+}
+
+.fade-bottom{
+    --amt:1em;
+    animation: fadeY 0.5s ease-in-out backwards;
+
+}
+
+.fade-top{
+    --amt:-1em;
+    animation: fadeY 0.5s ease-in-out backwards;
+
+}
+.paused{
+    animation-play-state: paused;
+}
+
+.storyline{
+    display:flex;
+    gap:5em;
+    flex-direction: column;
+}
+
+.mask-making-vid{
+    margin:auto;
+    width:80%;
+    height:auto;
+    aspect-ratio: 16/9;
+    grid-area: masqueradevid;
+    background:var(--secondarycolor);
+    border:none;
 }

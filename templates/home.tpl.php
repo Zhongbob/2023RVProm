@@ -1,26 +1,29 @@
+<?php  require_once("backend/Login/loginInitialise.inc.php"); ?>
 <link rel="stylesheet" href="static/css/home.css?<?php echo time(); ?>">
 </head>
 
 <body style="height: 100%;">
+    <?php require "templates/defaults/nav.tpl.php"?>
     <section class="hero">
         <img src="static/assets/about/logo.png">
         <h1>Carpe Nocterm</h1>
         <h2>2023 JC 2 Prom</h2>
-        <button class="default-button">Sign In</button>
+        <button class="default-button" onclick = "window.location.href = '<?php echo $googleUrl?>'">Sign In</button>
     </section>
     <div class="general-details">
-        <section class="programme-flow">
+        
+        <!-- <section class="programme-flow">
             <h2>Programme Flow</h2>
-            <img src="static/assets/about">
-        </section>
+            <img src="static/assets/about fadeTop paused">
+        </section> -->
         <section class="details">
             <h2>Details</h2>
-            <div class="details__datetime">
+            <div class="details__datetime fade-left paused">
                 <img src="static/assets/about/date.png">
                 <p class="date">Monday, 4th December</p>
                 <p class="time">7pm - 10.30pm</p>
             </div>
-            <div class="details__location">
+            <div class="details__location fade-right paused">
                 <img class="mt_hotel" src="static/assets/about/mariottTangHotel.png">
                 <p class="venue">Marriott Tang Hotel, Level 3</p>
                 <button class="default-button">View On Google Maps</button>
@@ -28,50 +31,48 @@
         </section>
         <section class="dress-code">
             <h2>Dress Code</h2>
-            <img src="static/assets/about">
-            <p class="dress-code-description">The dress code is <b>Smart Casual</b> <br><br> Stick to our colour theme! Wear blue and/or black outfits</p>
-            <img class = "dress-code-example" src="static/assets/about/dressCode.png">
-            <p class = "masquerade-description">It’s a Masquerade Ball! <b>Buy</b> or <b>Create</b> your own unique masks before the event!</p>
-            <img class = "masquerade-example" src = "static/assets/about/masquerade.png">
-            <video>
-                <source src="static/assets/about">
-            </video> 
+            <p class="dress-code-description fade-left paused">The dress code is <b>Smart Casual</b> <br><br> Stick to our colour theme! Wear blue and/or black outfits</p>
+            <img class = "dress-code-example fade-right paused" src="static/assets/about/dressCode.png">
+            <p class = "masquerade-description fade-right paused">It’s a Masquerade Ball! <b>Buy</b> or <b>Create</b> your own unique masks before the event!</p>
+            <img class = "masquerade-example fade-left paused" src = "static/assets/about/masquerade.png">
+            <iframe class = "mask-making-vid fade-bottom paused" src="https://drive.google.com/file/d/1TowF6-xmex1-Dw4bbNw9rnKA9znTsm--/preview" allow="autoplay">
+
+            </iframe>
         </section>
-        <section class="menu">
-            <h2>Menu</h2>
-            <img src="static/assets/about">
-            <p class="menu">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-        </section>
+        <div class = "bg"></div>
     </div>
     <div class="programmes">
+        
         <section class="storyline">
             <h2>Storyline</h2>
-            <video>
+            <!-- <video>
                 <source src="static/assets/about">
-            </video>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit dolor nihil obcaecati pariatur labore
-                animi eius perferendis magnam sit nam dicta eligendi fugiat, numquam quos reprehenderit illum est quam
-                ut!</p>
+            </video> -->
+            <!-- yes its inline styling, but its temporary so who cares -->
+            <p class = "fade-bottom paused" style = "width:50%;margin:auto;text-align:center;">The antagonist we first encountered, <b>Eris</b>, has returned, driven by a quest for revenge! It's time for us to unite and assist our hero, <b>Parker Peter</b>, in triumphing over Eris once more. Let's band together for this epic showdown!</p>
         </section>
 
         <section class="scavenger-hunt">
             <h2>Scavenger Hunt</h2>
-            <p class="desc1">The Mighty hero Parker Peter’s identity is at risk due to some inadvertently left clues!
+            <p class="desc1 fade-left paused">Our Mighty Hero <b>Parker Peter’s</b> identity is at risk due to some inadvertently left clues!
             </p>
-            <img class="img1" src="static/assets/about/scavengerHunt.png">
-            <div class="desc2">
-                <p>Scan the 15 QR codes hidden around the venue and perform a task to eliminate these clues before they
+            <img class="img1 fade-right paused" src="static/assets/about/scavengerHunt.png">
+            <div class="desc2 fade-right paused">
+                <p>Scan the <b>15 QR codes hidden</b> around the venue and perform a task to eliminate these clues before they
                     fall into Eris's hands. Let's protect our hero's secret together!</p>
-                <button class="default-button">Scan</button>
+                <!-- <button class="default-button">Scan</button> -->
             </div>
-            <img class="img2" src="static/assets/about/venue.png">
+            <img class="img2 fade-left paused" src="static/assets/about/venue.png">
         </section>
 
         <section class="booth-games">
             <h2>Booth Games</h2>
-            <img class="img3" src="static/assets/about/boothGamePrizes.png">
-            <p class="desc3">Join the mission to equip Peter Parker with vital medical supplies! Test your skills at our
+            <img class="img3 fade-left paused" src="static/assets/about/boothGamePrizes.png">
+            <p class="desc3 fade-right paused">Join the mission to equip Peter Parker with vital <b>medical supplies!</b> Test your skills at our
                 themed booth games and stand a chance to win
                 amazing prizes.</p>
         </section>
+        <div class = "bg"></div>
     </div>
+
+    <script src = "static/js/home.js?<?php echo time(); ?>"></script>
