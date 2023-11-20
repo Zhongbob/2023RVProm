@@ -1,3 +1,7 @@
+@font-face {
+    font-family: 'CooperHewitt';
+    src: url("../fonts/Cooper_Hewitt/CooperHewitt-Medium.ttf");
+}
 #guest-code{
     padding:0.3rem;
     background-color: white;
@@ -8,13 +12,25 @@
     width:100%;
     height:100%;
 }
+
+#guest-code>canvas{
+    width:100%;
+    height:100%;
+}
 .main{
-    position:relative;
-    margin:0 5rem;
+    position:fixed;
+    margin:5rem 5rem;
+    top:calc(50% - 5rem);
+    left:calc(50% - 5rem);
+    transform: translateY(-50%) translateX(-50%);
+    box-sizing: border-box;
+    width:calc(100vw - 10rem);
 }
 
 .ticket{
     width:100%;
+    height:fit-content;
+    
 }
 
 .guest-code__container{
@@ -29,4 +45,41 @@
     align-items: center;
     justify-content: center;
     gap:0.5rem;
+}
+
+.guest-code__name{
+    font-family: 'CooperHewitt', sans-serif;
+    text-align: center;
+    margin:0;
+    font-size: 2rem;
+}
+
+.guest-code__table{
+    font-family: 'CooperHewitt', sans-serif;
+    margin:0;
+    font-size: 1rem;
+}
+
+.reject{
+    font-size: 2rem;
+    width:70%;
+    text-align: center;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+@media (orientation: portrait) {
+    .main{
+        width:calc(100vh - 10rem);
+        /* set pivot point to be center */
+        transform-origin: 50% 50%;
+        transform: translate(-50%,-50%) rotate(90deg) ;
+    }
+    .guest-code__container{
+        gap:0.3rem;
+    }
+    .guest-code__name{
+        font-size: 0.8rem;
+    }
 }

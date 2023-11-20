@@ -1,7 +1,7 @@
 .header{
     display:flex;
     min-width:50%;
-    width:40em;
+    width:fit-content;
     justify-content:space-between;
 }
 

@@ -3,14 +3,14 @@
         <a href = "index.php" class = "nav__cell"  id = "home">
             <input type = "button" value = "Home" class = "nav__btn">
         </a>
-        <a href = "index.php?filename=ticket" class = "nav__cell" id = "Ticket">                    
+        <a href = "index.php?filename=ticket" class = "nav__cell" id = "ticket">                    
             <input type = "button"  value = "Ticket" class = "nav__btn">
             
         </a>
 
-        <a target = "_blank" href = "https://rdev.x10.mx" class = "nav__cell nav__cell--rdev">
+        <a target = "_blank" href = "https://www.instagram.com/rv_promenade/" class = "nav__cell nav__cell--rdev">
             <div >
-                <input alt = "rdev website" class = "nav__cell-image nav__cell-image--rdev" type = "image" src = "static/assets/default/rdev.webp">
+                <input alt = "prom instagram page" class = "nav__cell-image nav__cell-image--rdev" type = "image" src = "static/assets/default/logo.png">
             </div>
         </a>
 

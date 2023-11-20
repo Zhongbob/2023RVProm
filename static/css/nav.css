@@ -7,7 +7,7 @@
 	border: 0px;
 	font-weight: bold;
 	/* opacity: 1; */
-	font-size: 2rem;
+	font-size: 1em;
 	color: var(--text);
 	cursor:pointer;
 
@@ -69,14 +69,14 @@ table tr td {
 }
 
 .nav {
+	font-size: 1.5rem;
 	position: fixed;
 	right: 1em;
 	top: 1em;
-	font-size: calc(1.5vw + 5px);
 	height: 2.5em;
 	display: flex;
 	width: fit-content;
-	min-width: 60%;
+	min-width: 30%;
 	max-width: 100%;
 	background: linear-gradient(90deg, rgba(105, 164, 255, 0.54) 1.49%, rgba(15, 82, 186, 0.54) 68.58%);
 	/* opacity: 1; */

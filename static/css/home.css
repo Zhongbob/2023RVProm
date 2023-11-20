@@ -1,248 +1,296 @@
-
-
-.details{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "header header"
-                         "datetime location";
-    justify-content:center;
-    align-items:end;
-    gap:1em;
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "header header"
+    "datetime location";
+  justify-content: center;
+  align-items: end;
+  gap: 1em;
 }
 
-
-
-.details__datetime{
-    grid-area:datetime;
+.details__datetime {
+  grid-area: datetime;
 }
 
-.details__location{
-    grid-area:location;
+.details__location {
+  grid-area: location;
 }
 
-.details>h2{
-    width:100%;
+.details > h2 {
+  width: 100%;
 }
 
-.details>div{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    gap:0.5em;
-    width:100%;
+.details > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  width: 100%;
 }
 
-.details>div>p{
-    font-size:1.5em;
-    color:var(--text);
-    text-align:center;
-    margin:0;
-    font-weight: bold;
+.details > div > p {
+  font-size: 2em;
+  color: var(--text);
+  text-align: center;
+  margin: 0;
+  font-weight: bold;
 }
 
-.time{
-    color:var(--accent) !important;
-    font-size: 1em !important;
-    margin:0.7rem 0 !important;
+.time {
+  color: var(--accent) !important;
+  font-size: 1.5rem !important;
+  margin: 0.7rem 0 !important;
 }
 
-.mt_hotel{
-    margin-bottom:3rem;
-
+.mt_hotel {
+  margin-bottom: 3rem;
 }
 
-section{
-    padding:3rem 3em;
-    box-sizing: border-box;
+section {
+  padding: 3rem 3em;
+  box-sizing: border-box;
 }
 
+.scavenger-hunt {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "header header"
+    "desc1 image1"
+    "image2 desc2";
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  row-gap: 5rem;
+}
+.scavenger-hunt > h2 {
+  grid-area: header;
+  width: 100%;
+}
+.scavenger-hunt p {
+  width: 70%;
+  text-align: center;
+}
+.desc1 {
+  grid-area: desc1;
+}
+.desc2 {
+  grid-area: desc2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.image1 {
+  grid-area: image1;
+}
+.image2 {
+  grid-area: image2;
+}
 
-.scavenger-hunt{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "header header"
-                         "desc1 image1"
-                         "image2 desc2";
-    align-items: center;
-    justify-content: center;
-    justify-items: center;
-    row-gap: 5rem;
+.booth-games {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "header header"
+    "desc3 image3";
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
 }
-.scavenger-hunt>h2{
-    grid-area:header;
-    width:100%;
+
+.booth-games > h2 {
+  grid-area: header;
+  width: 100%;
 }
-.scavenger-hunt p{
-    width:70%;
+
+.image3 {
+  grid-area: image3;
+}
+
+.desc3 {
+  grid-area: desc3;
+  width: 70%;
+  text-align: center;
+}
+
+.general-details {
+  position: relative;
+}
+.general-details > .bg {
+  background: url("../assets/default/bg2.png");
+  background-size: cover;
+  filter: grayscale(100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+.programmes {
+  position: relative;
+}
+.programmes > .bg {
+  background: url("../assets/default/bg3.png"), black 100% / cover no-repeat;
+  background-size: cover;
+  position: absolute;
+  opacity: 0.7;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.dress-code {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  row-gap: 5rem;
+  grid-template-areas:
+    "header header"
+    "masqueradeimg masquerade"
+    "masqueradevid masqueradevid";
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+}
+
+.dress-code > h2 {
+  grid-area: header;
+  width: 100%;
+}
+.dress-code-description {
+  grid-area: dresscode;
+}
+
+.dress-code-example {
+  grid-area: dresscodeimg;
+  max-width: 70%;
+}
+
+.masquerade-description {
+  grid-area: masquerade;
+}
+
+.masquerade-example {
+  grid-area: masqueradeimg;
+  max-width: 70%;
+}
+
+.dress-code > p {
+  width: 70%;
+  text-align: center;
+}
+.img1 {
+  max-width: 70%;
+  grid-area: image1;
+}
+
+.img2 {
+  max-width: 70%;
+  grid-area: image2;
+}
+
+.img3 {
+  max-width: 70%;
+}
+
+p {
+  font-size: 2rem;
+}
+
+.fade-left {
+  --amt: 1em;
+  animation: fadeX 0.5s ease-in-out backwards;
+}
+
+.fade-right {
+  --amt: -1em;
+  animation: fadeX 0.5s ease-in-out backwards;
+}
+
+.fade-bottom {
+  --amt: 1em;
+  animation: fadeY 0.5s ease-in-out backwards;
+}
+
+.fade-top {
+  --amt: -1em;
+  animation: fadeY 0.5s ease-in-out backwards;
+}
+.paused {
+  animation-play-state: paused;
+}
+
+.storyline {
+  display: flex;
+  gap: 5em;
+  flex-direction: column;
+}
+
+.mask-making-vid {
+  margin: auto;
+  width: 80%;
+  height: auto;
+  aspect-ratio: 16/9;
+  grid-area: masqueradevid;
+  background: var(--secondarycolor);
+  border: none;
+}
+
+.details img {
+  max-width: 80%;
+}
+
+.storyline-details {
+    width: 70%;
+    margin: auto;
     text-align: center;
 }
-.desc1{
-    grid-area:desc1;
-}
-.desc2{
-    grid-area:desc2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.image1{
-    grid-area:image1;
-}
-.image2{
-    grid-area:image2;
-}
+  
+@media screen and (max-width: 767px) {
+  .dress-code {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      "header"
+      "masquerade"
+      "masqueradeimg"
+      "masqueradevid";
+  }
 
-.booth-games{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "header header"
-                         "desc3 image3";
-    align-items: center;
-    justify-content: center;
-    justify-items: center;
-}
+  .booth-games {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "desc3"
+      "image3";
+  }
 
-.booth-games>h2{
-    grid-area:header;
-    width:100%;
-}
+  .scavenger-hunt {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "desc1"
+      "image1"
+      "desc2"
+      "image2";
+  }
 
-.image3{
-    grid-area:image3;
-}
+  .details {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "datetime"
+      "location";
+  }
 
-.desc3{
-    grid-area:desc3;
-    width:70%;
-    text-align: center;
-}
-
-.general-details{
-    position:relative;
-}
-.general-details>.bg{
-    background:url("../assets/default/bg2.png");
-    background-size:cover;
-    filter:grayscale(100%);
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    z-index: -1;
-    opacity: 0.7;
-
-}
-
-.programmes{
-    position:relative;
-}
-.programmes>.bg{
-
-    background:url("../assets/default/bg3.png"), black 100% / cover no-repeat;;
-    background-size:cover;
-    position:absolute;
-    opacity:0.7;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    z-index: -1;
-}
-
-.dress-code{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr 1fr;
-    row-gap: 5rem;
-    grid-template-areas: "header header"
-                         "dresscode dresscodeimg"
-                         "masqueradeimg masquerade"
-                         "masqueradevid masqueradevid";
-    align-items: center;
-    justify-content: center;
-    justify-items: center;
-}
-
-.dress-code>h2{
-    grid-area:header;
-    width:100%;
-}
-.dress-code-description{
-    grid-area: dresscode;
-    
-}
-
-.dress-code-example{
-    grid-area: dresscodeimg;
-    max-width: 70%;
-}
-
-.masquerade-description{
-    grid-area: masquerade;
-}
-
-.masquerade-example{
-    grid-area: masqueradeimg;
-    max-width: 70%;
-
-}
-
-.dress-code>p{
-    width:70%;
-    text-align: center;
-}
-
-.img2{
-    max-width: 70%;
-}
-
-.img3{
-    max-width: 70%;
-}
-
-p{
-    font-size:2rem;
-}
-
-.fade-left{
-    --amt:1em;
-    animation: fadeX 0.5s ease-in-out backwards;
-}
-
-.fade-right{
-    --amt:-1em;
-    animation: fadeX 0.5s ease-in-out backwards;
-}
-
-.fade-bottom{
-    --amt:1em;
-    animation: fadeY 0.5s ease-in-out backwards;
-
-}
-
-.fade-top{
-    --amt:-1em;
-    animation: fadeY 0.5s ease-in-out backwards;
-
-}
-.paused{
-    animation-play-state: paused;
-}
-
-.storyline{
-    display:flex;
-    gap:5em;
-    flex-direction: column;
-}
-
-.mask-making-vid{
-    margin:auto;
-    width:80%;
-    height:auto;
-    aspect-ratio: 16/9;
-    grid-area: masqueradevid;
-    background:var(--secondarycolor);
-    border:none;
+  .dress-code > p,.storyline-details, .scavenger-hunt p, .desc1, .desc2, .desc3 {
+    width: 100%;
+  }
 }

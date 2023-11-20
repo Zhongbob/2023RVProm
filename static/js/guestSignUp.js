@@ -1,7 +1,11 @@
 const continueButton = document.querySelector(".continue");
+const classSelector = document.querySelector(".class-selector");
+
 continueButton.addEventListener("click", () => {
   const warningContainer = document.querySelector(".warning__container");
   warningContainer.classList.add("hidden");
+  const mainContainer = document.querySelector(".main");
+  mainContainer.classList.remove("hidden");
 });
 
 function levenshteinDistance(a, b) {
@@ -52,7 +56,9 @@ function findMostSimilar(targetName, nameList) {
   return mostSimilar;
 }
 
-function initialiseSelectors(studentClass){
+function initialiseSelectors(student){
+    const studentClass = student.class
+    const guestId = student.guestId
     const classStudents = guestData[studentClass];
     const nameSelector = document.querySelector(".name-selector");
     nameSelector.innerHTML = "";
@@ -62,14 +68,16 @@ function initialiseSelectors(studentClass){
         option.innerText = name;
         nameSelector.appendChild(option);
     });
+    nameSelector.value = guestId;
+    classSelector.value = studentClass;
+
 }
 function initialiseUserDetails(username) {
     const similar = findMostSimilar(username, guestData);
-    initialiseSelectors(similar.class);
+    initialiseSelectors(similar);
 }
 initialiseUserDetails(username);
 
-const classSelector = document.querySelector(".class-selector");
 classSelector.addEventListener("change", (e) => {
     initialiseSelectors(e.target.value);
 });
@@ -78,7 +86,6 @@ const submitButton = document.querySelector(".submit");
 submitButton.addEventListener("click", () => {
   const nameSelector = document.querySelector(".name-selector");
   const guestId = nameSelector.value;
-  console.log("Ran")
   postRequest("backend/Login/assignGuest.php", { guestId: guestId }, (result) => {
     console.log(result)
     if (result.success) {

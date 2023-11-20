@@ -32,7 +32,7 @@ function isAdmin($conn, $userinfo)
             SELECT 1 FROM admin WHERE email = ?
         ) AS 'exists';
         ";
-        $cursor = prepared_query($conn, $sql, [$userinfo[1],], 's');
+        $cursor = prepared_query($conn, $sql, [$userinfo["email"],], 's');
         $cursor->bind_result($exists);
         $cursor->fetch();
         if ($exists)
@@ -112,7 +112,6 @@ function rememberMe($conn)
 {
 
     $cookie = isset($_COOKIE['rememberme']) ? $_COOKIE['rememberme'] : '';
-    echo $cookie;
     if ($cookie) {
         list($user, $token, $tokenid, $mac) = explode(':', $cookie);
         if (!hash_equals(hash_hmac('sha256', $user . ':' . $token . ':' . $tokenid, SECRET_KEY), $mac)) {

@@ -5,6 +5,7 @@ require_once("backend/Defaults/csrf.php");
 
 $logInInfo = getAccountInfo($conn);
 $guestInfo = !$logInInfo?false:getGuestInfo($conn,$logInInfo["userid"]); 
+$isAdmin = isAdmin($conn, $logInInfo);
 header('Strict-Transport-Security: max-age=63072000; includeSubDomains; preload');
 header('X-Frame-Options: DENY');
 header('X-Content-Type-Options: nosniff');
@@ -19,7 +20,7 @@ if (isset($_GET['filename'])) {
 
 include('templates/defaults/header.tpl.php');
 
-if ($logInInfo && !$guestInfo) {
+if ($logInInfo && !$guestInfo && !$isAdmin) {
     include('templates/guestSignUp.tpl.php');
 } else {
     switch ($filename) {

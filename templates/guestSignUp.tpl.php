@@ -19,7 +19,7 @@ require_once("backend/Login/guestData.inc.php");
         </div>
 
     </div>
-    <div class = "main">
+    <div class = "main <?php echo $logInInfo["fromRVHS"]?"":"hidden" ?>">
         <h2 class = "highlight">Please confirm your name and class</h2>
         <div>
         <label for = "name">Class: </label>
