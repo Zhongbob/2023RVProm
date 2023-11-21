@@ -3,7 +3,7 @@ const nominationPopup = document.querySelector('.nomination');
 const nominateUserButton = nominationPopup.querySelector('.nominate');
 var nominationSection = -1;
 const idToSection = {
-    "nominate-pic": 0,
+    "pic": 0,
     "2": 1,
     "3": 2,
 }
@@ -17,7 +17,8 @@ var loaded = false;
 
 async function nominateButtonPressed(){
     await fetchGuestData();
-    nominationSection = idToSection[this.id];
+    const parentId = this.parentElement.parentElement.id;
+    nominationSection = idToSection[parentId];
     await initaliseClassSelector(nominationSection);
     nominationPopup.classList.remove('hidden');
 
@@ -64,7 +65,7 @@ function initaliseNameSelector(section,classOf){
 }
 
 function updateNominees(section, nominee){
-    const nomineeContainer = document.querySelector(`#${sectionToId[section]}`).parentElement.parentElement.querySelector('.nominee__container');
+    const nomineeContainer = document.querySelector(`#${sectionToId[section]}`).querySelector('.nominee__container');
     const nomineeElement = document.createElement("div");
     nomineeElement.classList.add("nominee");
     nomineeElement.innerHTML = `

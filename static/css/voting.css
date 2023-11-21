@@ -13,12 +13,14 @@
     flex-direction: column;
     justify-content: space-between;
     gap:0.5em;
-    
+    position:relative;
+    cursor:pointer;
 
 }
 .nominee__img{
     width: 15rem;
     height: 20rem;
+    transition: filter 0.5s ease-in-out;
 }
 
 .nominee__name{
@@ -87,4 +89,80 @@ section:not(.hero){
     margin-top:2rem;
     width:fit-content;
     font-size: 1.5rem;
+}
+
+.nominee:hover .nominee__img{
+    filter:blur(3px) brightness(0.5);
+}
+
+.nominee:hover .nominee__desc{
+    opacity:1;
+}
+.nominee-img__container{
+    position:relative;
+
+}
+
+.nominee__desc{
+    font-size: 1.5em;
+    position:absolute;
+    width:100%;
+    height:100%;
+    margin:0;
+    top:0;
+    left:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    text-align: center;
+    opacity:0;
+    transition: opacity 0.5s ease-in-out;
+
+}
+.nominee:hover .heart:before, .nominee:hover .heart:after{
+    background: rgb(196, 196, 196);
+}
+.nominee:hover .heart{
+    filter:drop-shadow(0 0 0.2em rgb(0, 0, 0));
+    transform: translate(20%,20%) scale(1.1);
+}
+
+.voted .heart{
+    filter:drop-shadow(0 0 0.2em rgb(0, 0, 0)) !important;
+    transform: translate(20%,20%) scale(1.2) !important;
+}
+
+.voted .heart:before, .voted .heart:after{
+    background: rgb(255, 255, 255) !important;
+}
+
+.heart { 
+    position: absolute; 
+    width: 4em; 
+    height: 3.5em; 
+    right:0;
+    bottom:0;
+    filter:drop-shadow(0 0 0.2em rgb(196, 196, 196));
+    transform: translate(20%, 20%);
+    transition: filter 0.5s ease-in-out, transform 0.5s ease-in-out;
+} 
+
+.heart:before, .heart:after { 
+    position: absolute; 
+    content: ""; 
+    left: 50%; 
+    top: 0; 
+    width: 50%; 
+    height: 100%; 
+    background: rgb(0, 0, 0);
+    border-radius: 1em 1em 0 0; 
+    transform: rotate(-45deg); 
+    transform-origin: 0 100%; 
+    transition: background 0.5s ease-in-out;
+} 
+
+.heart:after { 
+    left: 0; 
+    transform: rotate(45deg); 
+    transform-origin :100% 100%; 
 }

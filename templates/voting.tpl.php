@@ -52,16 +52,21 @@
         </div>
     </section>  -->
 
-    <section class="partners-in-crime">
+    <section class="partners-in-crime" id = "pic">
         <div class="header">
             <h2>Partners in Crime</h2>
             <button class="default-button nominate-button" id="nominate-pic">Nominate</button>
         </div>
         <input type="text" class="search default-button" placeholder="Search by Name or Class">
         <div class="nominee__container">
-            <?php foreach ($guestData[0] as $guest) { ?>
-                <div class="nominee">
-                    <img class="nominee__img" src="<?php echo htmlspecialchars($guest["image"], ENT_QUOTES, 'UTF-8'); ?>">
+            <?php foreach ($guestData[0] as $guestId => $guest) { ?>
+                <div class="nominee <?php if ($guest["voted"]) echo "voted";?>" data-guest-id = "<?php echo htmlspecialchars($guestId);?>">
+                    <div class = "nominee-img__container">
+                        <img class="nominee__img" src="<?php echo htmlspecialchars($guest["image"], ENT_QUOTES, 'UTF-8'); ?>">
+                        <p class = "nominee__desc"><?php echo htmlspecialchars($guest["description"]);?></p>
+                        <div class="heart"></div>
+
+                    </div>
                     <p class="nominee__name">
                         <?php echo htmlspecialchars($guest["studentName"], ENT_QUOTES, 'UTF-8'); ?>
                     </p>
