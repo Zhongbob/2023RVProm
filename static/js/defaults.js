@@ -31,7 +31,8 @@ async function postRequest(destination,data,action,secure,reportError){
             console.log(result)
             return result
         }
-        return ""
+        console.error(e)
+        return {success:false,error:`${e} Please contact rdevcca@gmail.com for assistance if this error persists.`}
     }
     return action ? action(result) : result 
     

@@ -1,4 +1,3 @@
-<?php require_once("backend/Login/loginInitialise.inc.php"); ?>
 <link rel="stylesheet" href="static/css/home.css?<?php echo time(); ?>">
 <meta name="pageTitle" content="home">
 </head>
@@ -9,11 +8,7 @@
         <img src="static/assets/default/logo.png">
         <h1>Carpe Noctem</h1>
         <h2>2023 JC 2 Prom</h2>
-        <?php if (!$guestInfo && !$isAdmin) { ?>
-            <button class="default-button" onclick="window.location.href = '<?php echo $googleUrl ?>'">Sign In</button>
-        <?php } else { ?>
-            <button class="default-button" onclick="window.location.href = 'backend/Login/logout.php'">Logout</button>
-        <?php } ?>
+        <?php require_once "templates/defaults/signin.tpl.php"?>
     </section>
     <div class="general-details">
 

@@ -1,92 +1,36 @@
 const continueButton = document.querySelector(".continue");
 const classSelector = document.querySelector(".class-selector");
-
 continueButton.addEventListener("click", () => {
   const warningContainer = document.querySelector(".warning__container");
   warningContainer.classList.add("hidden");
-  const mainContainer = document.querySelector(".main");
-  mainContainer.classList.remove("hidden");
+  const mainContainer2 = document.querySelector(".main2");
+  mainContainer2.classList.remove("hidden");
 });
 
-function levenshteinDistance(a, b) {
-  const matrix = [];
-
-  // Initialize the matrix
-  for (let i = 0; i <= b.length; i++) {
-    matrix[i] = [i];
-  }
-  for (let j = 0; j <= a.length; j++) {
-    matrix[0][j] = j;
-  }
-
-  // Populate the matrix
-  for (let i = 1; i <= b.length; i++) {
-    for (let j = 1; j <= a.length; j++) {
-      if (b.charAt(i - 1) === a.charAt(j - 1)) {
-        matrix[i][j] = matrix[i - 1][j - 1];
-      } else {
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1, // substitution
-          Math.min(
-            matrix[i][j - 1] + 1, // insertion
-            matrix[i - 1][j] + 1
-          )
-        ); // deletion
-      }
-    }
-  }
-
-  return matrix[b.length][a.length];
-}
-
-function findMostSimilar(targetName, nameList) {
-  let minDistance = Infinity;
-  let mostSimilar = null;
-
-  for (var [studentClass, studentNames] of Object.entries(nameList)) {
-    studentNames.forEach(([guestId,name]) => {
-        const distance = levenshteinDistance(targetName.toLowerCase(), name.toLowerCase());
-      if (distance < minDistance) {
-        minDistance = distance;
-        mostSimilar = {"name": name, "class": studentClass, "guestId": guestId};
-      } 
-    });
-  }
-
-  return mostSimilar;
-}
-
-function initialiseSelectors(student){
-    const studentClass = student.class
-    const guestId = student.guestId
-    const classStudents = guestData[studentClass];
+function initialiseSelectors(classOf){
+    const classStudents = guestData[classOf];
     const nameSelector = document.querySelector(".name-selector");
     nameSelector.innerHTML = "";
+    console.log(guestData,classOf)
     classStudents.forEach(([guestId,name]) => {
         const option = document.createElement("option");
         option.value = guestId;
         option.innerText = name;
         nameSelector.appendChild(option);
     });
-    nameSelector.value = guestId;
-    classSelector.value = studentClass;
+    classSelector.value = classOf;
 
 }
-function initialiseUserDetails(username) {
-    const similar = findMostSimilar(username, guestData);
-    initialiseSelectors(similar);
-}
-initialiseUserDetails(username);
 
 classSelector.addEventListener("change", (e) => {
     initialiseSelectors(e.target.value);
 });
 
-const submitButton = document.querySelector(".submit");
-submitButton.addEventListener("click", () => {
+const submit2Button = document.querySelector(".submit2");
+submit2Button.addEventListener("click", () => {
   const nameSelector = document.querySelector(".name-selector");
   const guestId = nameSelector.value;
-  postRequest("backend/Login/assignGuest.php", { guestId: guestId }, (result) => {
+  postRequest("backend/Login/assignGuest.php", { guestId: guestId, confirmed: false }, (result) => {
     console.log(result)
     if (result.success) {
       window.location.href = "index.php";
@@ -95,3 +39,42 @@ submitButton.addEventListener("click", () => {
     }
 }, true, true)
 })
+
+const submit1Button = document.querySelector(".submit1");
+submit1Button.addEventListener("click", async () => {
+  if (guestId == -1) {
+    alert("Please select a user");
+    return}
+  var response = await postRequest("backend/Login/assignGuest.php", { guestId: guestId, confirmed: true })
+  console.log(response)
+  if (response.success) {
+    window.location.href = "index.php";
+  } else {
+    alert("Error: " + response.error)
+  }
+
+});
+
+const guestButtons = document.querySelectorAll(".guest");
+guestButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+
+    guestId = button.dataset.guestId;
+    console.log(guestId);
+    for (var i = 0; i < guestButtons.length; i++) {
+      guestButtons[i].classList.remove("selected");
+    }
+    button.classList.add("selected");
+
+  });
+});
+
+initialiseSelectors(classSelector.value)
+
+const nameNotHereButton = document.querySelector(".error");
+nameNotHereButton.addEventListener("click", () => {
+  const mainContainer1 = document.querySelector(".main");
+  mainContainer1.classList.add("hidden");
+  const mainContainer2 = document.querySelector(".main2");
+  mainContainer2.classList.remove("hidden");
+});

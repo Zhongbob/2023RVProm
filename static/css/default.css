@@ -119,6 +119,6 @@ b,.highlight{
 button,select{
     transition:filter 0.3s ease-in-out;
 }
-button:hover,select:hover{
+.default-button:hover{
     filter:brightness(1.2);
 }

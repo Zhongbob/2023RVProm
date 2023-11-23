@@ -7,6 +7,10 @@
             <input type = "button"  value = "Ticket" class = "nav__btn">
             
         </a>
+        <a href = "index.php?filename=voting" class = "nav__cell" id = "voting">                    
+            <input type = "button"  value = "Voting" class = "nav__btn">
+            
+        </a>
 
         <a target = "_blank" href = "https://www.instagram.com/rv_promenade/" class = "nav__cell nav__cell--rdev">
             <div >

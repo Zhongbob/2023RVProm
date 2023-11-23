@@ -12,6 +12,5 @@ while ($row = mysqli_fetch_assoc($result)) {
     array_push($guestData[$class], [(int) $row["guestId"], $row["studentName"]]);
 }
 
-
 echo json_encode($guestData);
 ?>

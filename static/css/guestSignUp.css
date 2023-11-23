@@ -41,13 +41,14 @@ select{
     background: rgba(43, 57, 79, 0.58) !important;
     border: 4px solid #5F93E5 !important;
     text-align: center;
-    min-width:20vw;
-    width:20em;
+    width:100%;
 }
 
 label{
     display:inline-block;
-    min-width: 5em;
+    font-size: 2em;
+    text-align: center;
+    width:100%;
     font-weight: bold;
 }
 
@@ -57,5 +58,74 @@ label{
     align-items:center;
     flex-direction:column;
     gap:1em;
+    width:80%;
+}
+.main2{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    gap:1em;
+    width:80%;
+}
 
+.main2>h2{
+    font-size: 1.5em;
+    max-width: 80%;
+    margin:auto;
+    text-align: center;
+}
+
+.guest{
+    display:flex;
+    background: rgba(43, 57, 79, 0.58) !important;
+    border: 4px solid #5F93E5 !important;
+    border-radius: 0.5em;
+    position:relative;
+    max-width: 90%;
+    font-size: 2em;
+    padding: 0.5em;
+    width:20em;
+    gap:1em;
+    color:white;
+    cursor: pointer;
+}
+
+.guest>*{
+    margin:0
+}
+.guest__class{
+    font-weight: bold;
+}
+.guest__name{
+    width:100%;
+    text-align: center;
+}
+
+.selected{
+    background: rgba(49, 79, 43, 0.58) !important;
+    border: 4px solid #6ae55f !important;
+}
+
+.class-selector{
+    width:fit-content
+}
+
+.name-selector{
+    width:fit-content
+}   
+
+.error{
+    background: rgba(79, 43, 43, 0.58) !important;
+    border: 4px solid #e55f5f !important;
+}
+
+.submit1{
+    background: rgba(43, 57, 79, 0.58) !important;
+    border: 4px solid #5F93E5 !important;
+}
+
+.submit2{
+    background: rgba(49, 79, 43, 0.58) !important;
+    border: 4px solid #6ae55f !important;
 }

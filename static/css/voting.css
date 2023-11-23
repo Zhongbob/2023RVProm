@@ -19,8 +19,9 @@
 }
 .nominee__img{
     width: 15rem;
-    height: 20rem;
+    aspect-ratio: 2/3;
     transition: filter 0.5s ease-in-out;
+    object-fit: contain;
 }
 
 .nominee__name{
@@ -86,7 +87,6 @@ section:not(.hero){
 
 
 .search{
-    margin-top:2rem;
     width:fit-content;
     font-size: 1.5rem;
 }
@@ -137,6 +137,7 @@ section:not(.hero){
 }
 
 .heart { 
+    font-size:0.8rem;
     position: absolute; 
     width: 4em; 
     height: 3.5em; 
@@ -165,4 +166,53 @@ section:not(.hero){
     left: 0; 
     transform: rotate(45deg); 
     transform-origin :100% 100%; 
+}
+
+.misc{
+    display:flex;
+    flex-direction:row;
+    gap:1em;
+    width:100%;
+    max-width: 100%;
+    margin-top:2rem;
+
+}
+
+.remaining-votes{
+    font-size: 1.5rem;
+    margin:0;
+    display:flex;
+    align-items:center;
+    font-weight: bold;
+}
+@media only screen and (max-width: 600px) {
+    .header{
+        flex-direction:column;
+        gap:1em;
+    }
+    .nominee__container{
+        padding: 1em 0;
+    }
+    .nominee{
+        width: 40%;
+    }
+    .nominee__img{
+        width: 100%;
+    }
+    .nominee__desc{
+        font-size: 1em;
+    }
+    .nominee__name{
+        font-size: 1em;
+    }
+    .nominee__table{
+        font-size: 0.8em;
+    }
+    .misc{
+        flex-direction:column;
+        gap:0.5em;
+    }
+    section:not(.hero){
+        padding:1rem 2rem;
+    }
 }

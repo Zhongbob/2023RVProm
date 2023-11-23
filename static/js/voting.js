@@ -1,27 +1,39 @@
 const nominees = document.querySelectorAll('.nominee');
+
+async function voteUser(guestId,section,voteRemove){
+    const response = await postRequest("backend/Votings/voting.php", {
+        "guestId": guestId,
+        "vote": voteRemove,
+        "section": section
+    });
+    if (!response.success){
+        alert(response.error);
+        return false;
+    }
+    if (voteRemove == 1){
+        remainingVotes[section]--;
+    }
+    else{
+        remainingVotes[section]++;
+    }
+    console.log(sectionToId[section])
+    const remainingVotesElement = document.querySelector(`#${sectionToId[section]} .remaining-votes>span`);
+    console.log()
+    remainingVotesElement.innerText = remainingVotes[section];
+    return true;
+}
 async function vote(){
     this.classList.toggle('voted');
     if (this.classList.contains('voted')){
-        var response = await postRequest("backend/Votings/voting.php", {
-            "guestId": this.dataset.guestId,
-            "vote": 1,
-            "section": idToSection[this.parentElement.parentElement.id] 
-        });
-        console.log(response);
-        if (!response.success){
+        const success = await voteUser(this.dataset.guestId, idToSection[this.parentElement.parentElement.id], 1);
+        if (!success){
             this.classList.remove('voted');
-            alert(response.error)
         }
     }
     else {
-        var response = await postRequest("backend/Votings/voting.php", {
-            "guestId": this.dataset.guestId,
-            "vote": 0,
-            "section": idToSection[this.parentElement.parentElement.id] 
-        });
-        if (!response.success){
+        const success = await voteUser(this.dataset.guestId, idToSection[this.parentElement.parentElement.id], 0);
+        if (!success){
             this.classList.add('voted');
-            alert(response.error)
         }
     }
 }
