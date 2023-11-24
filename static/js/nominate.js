@@ -163,7 +163,17 @@ nomineesData[section][nominee.guestId] = nominee;
 
 }
 
-
+function resetPopup(){
+    const classOf = nominationPopup.querySelector('.class');
+    const nameSelector = nominationPopup.querySelector('.name');
+    const descriptionSelect = nominationPopup.querySelector('.reason');
+    const imageUpload = nominationPopup.querySelector('#image-upload');
+    imageUpload.value = "";
+    descriptionSelect.value = "";
+    nameSelector.value = "";
+    imagePreview.src = "";
+    imageText.innerHTML = "Upload Image of Student! <br> Recommended Aspect Ratio is 2:3";
+}
 async function nominateUser(){
     const classOf = nominationPopup.querySelector('.class').value;
     const nameSelector = nominationPopup.querySelector('.name');
@@ -185,6 +195,7 @@ async function nominateUser(){
         hidePopup();
         return;
     }
+    onLoading();
     var response = await postRequest("backend/Votings/nominate.php", {guestId: guestId, section: nominationSection, nomineeDesc: description, image: image},
         null);
     console.log(response)
@@ -197,11 +208,14 @@ async function nominateUser(){
         "description":description,
         "studentName":nameSelector.value,
         "voted":true});
+        onSuccess()
         nominationSection = -1;
         guestId = -1;
+        resetPopup();
+
     }
     else{
-        alert(response.error);
+        onErrorMessage(response.error);
     }
 }
 

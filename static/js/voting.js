@@ -16,9 +16,7 @@ async function voteUser(guestId,section,voteRemove){
     else{
         remainingVotes[section]++;
     }
-    console.log(sectionToId[section])
     const remainingVotesElement = document.querySelector(`#${sectionToId[section]} .remaining-votes>span`);
-    console.log()
     remainingVotesElement.innerText = remainingVotes[section];
     return true;
 }

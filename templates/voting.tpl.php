@@ -9,7 +9,7 @@
 
 <body style="height: 100%;">
     <?php require "templates/defaults/nav.tpl.php" ?>
-
+    <?php require "templates/defaults/PopUpLoading.tpl.php" ?>
     <section class="hero">
         <img src="static/assets/default/logo.png">
         <h1>Votings</h1>

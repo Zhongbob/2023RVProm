@@ -28,15 +28,14 @@ if ($logInInfo){
             $guestData[$sectionId][$guestId]["voted"] = true;
         }
     }
-    
+    mysqli_stmt_close($stmt);
+
     $maxNominations = 3;
     $sql = "SELECT COUNT(*) as peopleNominated ,`category`  FROM votes WHERE `voterId` = ? GROUP BY `category`";
     $stmt = prepared_query($conn, $sql, [$_SESSION["userid"]], "i");
     $remainingVotes = [3,3,3];
     $res = iimysqli_stmt_get_result($stmt);
     while ($row = iimysqli_result_fetch_assoc_array($res)) {
-        echo $row["category"];
-        echo $row["peopleNominated"];
         $remainingVotes[$row["category"]] = $remainingVotes[$row["category"]] - $row["peopleNominated"];
     }
 }
