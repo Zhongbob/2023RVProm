@@ -24,15 +24,29 @@
             <button class="cancel default-button">Cancel</button>
             <?php
         } ?>
-        <div id = "max" class="tmp hidden">
+        <div id="max" class="tmp hidden">
             <h2>Nomination For <span class="nomination-type">Partners In Crime</span></h2>
-            <h3 style = "font-size:2em;">You have already nominated 3 people for this category</h3>
+            <h3 style="font-size:2em;">You have already nominated 3 people for this category</h3>
             <button class="cancel default-button">Cancel</button>
         </div>
-        <div id = "main" class="tmp">
-                <h2>Nomination For <span class="nomination-type">Partners In Crime</span></h2>
-                <h3 class="remaining"><span>3</span> Nominations Left for this category</h3>
-                <div class="guest-info__container">
+        <div id="main" class="tmp">
+            <h2>Nomination For <span class="nomination-type">Partners In Crime</span></h2>
+            <h3 class="remaining"><span>3</span> Nominations Left for this category</h3>
+            <div class="first-guest guest-info__container">
+                <input type="text" class="name default-button">
+                <select class="class default-button">
+                    <option value="">CLASS</option>
+                </select>
+                <div class="guest-list hidden">
+                    <div class="guest">
+                        <p class="guest__name">Guest 1</p>
+                        <p class="guest__class">Class</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tmp">
+                <span class = "special"> And </span>
+                <div class="second-guest guest-info__container">
                     <input type="text" class="name default-button">
                     <select class="class default-button">
                         <option value="">CLASS</option>
@@ -44,37 +58,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="guest-details__container">
-                    <div class="image">
-                        <input type="file" id="image-upload" accept="image/*">
-                        <label class="image-upload__text" for="image-upload">Upload Image of Student! <br> Recommended
-                            Aspect Ratio is 2:3</label>
-                        <img class="image-preview">
+            </div>
+            <div class="guest-details__container">
+                <div class="image">
+                    <input type="file" id="image-upload" accept="image/*">
+                    <label class="image-upload__text" for="image-upload">Upload Image of Student! <br> Recommended
+                        Aspect Ratio is 2:3</label>
+                    <img class="image-preview">
 
-                    </div>
-                    <textarea class="reason default-button" placeholder="Reason for Nomination"></textarea>
                 </div>
-                <div class="action-button__container">
-                    <button class="cancel default-button">Cancel</button>
-                    <button class="nominate default-button">Nominate</button>
-                </div>
+                <textarea class="reason default-button" placeholder="Reason for Nomination"></textarea>
+            </div>
+            <div class="action-button__container">
+                <button class="cancel default-button">Cancel</button>
+                <button class="nominate default-button">Nominate</button>
             </div>
         </div>
-        <section class="partners-in-crime" id="pic">
-            <div class="header">
-                <h2>Partners in Crime</h2>
-                <button class="default-button nominate-button" id="nominate-pic">Nominate</button>
-            </div>
-            <div class="misc">
-                <input type="text" class="search default-button" placeholder="Search by Name or Class">
-                <p class="remaining-votes"><span>
+    </div>
+    <section class="partners-in-crime" id="pic">
+        <div class="header">
+            <h2>Partners in Crime</h2>
+            <button class="default-button nominate-button" id="nominate-pic">Nominate</button>
+        </div>
+        <div class="misc">
+            <input type="text" class="search default-button" placeholder="Search by Name or Class">
+            <p class="remaining-votes"><span>
                     <?php echo $remainingVotes[0] ?>
                 </span>&nbsp;Votes Left</p>
         </div>
         <div class="nominee__container">
             <?php foreach ($guestData[0] as $guestId => $guest) { ?>
                 <div class="nominee <?php if ($guest["voted"])
-                    echo "voted"; ?>" data-guest-id="<?php echo htmlspecialchars($guestId); ?>">
+                    echo "voted"; ?>" data-guest-id1="<?php echo htmlspecialchars($guest["guestId1"]); ?>" data-guest-id2="<?php echo htmlspecialchars($guest["guestId2"]); ?>">
                     <div class="nominee-img__container">
                         <img class="nominee__img"
                             src="<?php echo htmlspecialchars($guest["image"], ENT_QUOTES, 'UTF-8'); ?>">
@@ -85,16 +100,23 @@
 
                     </div>
                     <p class="nominee__name">
-                        <?php echo htmlspecialchars($guest["studentName"], ENT_QUOTES, 'UTF-8'); ?>
+                        <?php echo htmlspecialchars($guestInfo[$guest["guestId1"]]["studentName"], ENT_QUOTES, 'UTF-8'); ?>
+                        & 
+                        <?php echo htmlspecialchars($guestInfo[$guest["guestId2"]]["studentName"], ENT_QUOTES, 'UTF-8'); ?>
                     </p>
                     <p class="nominee__table">
-                        <?php echo htmlspecialchars($guest["class"], ENT_QUOTES, 'UTF-8'); ?>
+                        <?php echo htmlspecialchars($guestInfo[$guest["guestId1"]]["class"], ENT_QUOTES, 'UTF-8'); ?>
+                        <?php 
+                        if ($guestInfo[$guest["guestId1"]]["class"] != $guestInfo[$guest["guestId2"]]["class"]){
+                            echo " || ";
+                            echo htmlspecialchars($guestInfo[$guest["guestId2"]]["class"], ENT_QUOTES, 'UTF-8'); 
+                        }?>    
                     </p>
                 </div>
             <?php } ?>
         </div>
     </section>
-
+    <hr class = "pic">
     <section class="prom-king" id="pk">
         <div class="header">
             <h2>Prom King</h2>
@@ -108,9 +130,9 @@
         </div>
 
         <div class="nominee__container">
-            <?php foreach ($guestData[1] as $guest) { ?>
+            <?php foreach ($guestData[1] as $guestId => $guest) { ?>
                 <div class="nominee <?php if ($guest["voted"])
-                    echo "voted"; ?>" data-guest-id="<?php echo htmlspecialchars($guestId); ?>">
+                    echo "voted"; ?>" data-guest-id1="<?php echo htmlspecialchars($guest["guestId1"]); ?>" data-guest-id2="<?php echo htmlspecialchars($guest["guestId2"]); ?>">
                     <div class="nominee-img__container">
                         <img class="nominee__img"
                             src="<?php echo htmlspecialchars($guest["image"], ENT_QUOTES, 'UTF-8'); ?>">
@@ -121,16 +143,16 @@
 
                     </div>
                     <p class="nominee__name">
-                        <?php echo htmlspecialchars($guest["studentName"], ENT_QUOTES, 'UTF-8'); ?>
+                    <?php echo htmlspecialchars($guestInfo[$guest["guestId1"]]["studentName"], ENT_QUOTES, 'UTF-8'); ?>
                     </p>
                     <p class="nominee__table">
-                        <?php echo htmlspecialchars($guest["class"], ENT_QUOTES, 'UTF-8'); ?>
+                    <?php echo htmlspecialchars($guestInfo[$guest["guestId1"]]["class"], ENT_QUOTES, 'UTF-8'); ?>
                     </p>
                 </div>
             <?php } ?>
         </div>
     </section>
-
+    <hr class = "pk">
     <section class="prom-queen" id="pq">
         <div class="header">
             <h2>Prom Queen</h2>
@@ -144,9 +166,9 @@
         </div>
 
         <div class="nominee__container">
-            <?php foreach ($guestData[2] as $guest) { ?>
+            <?php foreach ($guestData[2] as $guestId => $guest) { ?>
                 <div class="nominee <?php if ($guest["voted"])
-                    echo "voted"; ?>" data-guest-id="<?php echo htmlspecialchars($guestId); ?>">
+                    echo "voted"; ?>" data-guest-id1="<?php echo htmlspecialchars($guest["guestId1"]); ?>" data-guest-id2="<?php echo htmlspecialchars($guest["guestId2"]); ?>">
                     <div class="nominee-img__container">
                         <img class="nominee__img"
                             src="<?php echo htmlspecialchars($guest["image"], ENT_QUOTES, 'UTF-8'); ?>">
@@ -157,17 +179,20 @@
 
                     </div>
                     <p class="nominee__name">
-                        <?php echo htmlspecialchars($guest["studentName"], ENT_QUOTES, 'UTF-8'); ?>
+                    <?php echo htmlspecialchars($guestInfo[$guest["guestId1"]]["studentName"], ENT_QUOTES, 'UTF-8'); ?>
                     </p>
                     <p class="nominee__table">
-                        <?php echo htmlspecialchars($guest["class"], ENT_QUOTES, 'UTF-8'); ?>
+                    <?php echo htmlspecialchars($guestInfo[$guest["guestId1"]]["class"], ENT_QUOTES, 'UTF-8'); ?>
                     </p>
                 </div>
             <?php } ?>
         </div>
     </section>
+    <hr class = "pq">
+
     <script>
         const nomineesData = <?php echo json_encode($guestData); ?>;
+        const guestData = <?php echo json_encode($guestInfo); ?>;
         const remainingVotes = <?php echo json_encode($remainingVotes); ?>;
         const loggedIn = <?php echo $logInInfo ? "true" : "false"; ?>;
     </script>

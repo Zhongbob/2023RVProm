@@ -10,7 +10,6 @@ function onLoading() {
 
 function onErrorMessage(message) {
   // Handles errors I assume
-  fileInput.disabled = false;
   checkEle.dataset.status = "Failure";
   errorMsgEle.innerText = message;
   popupLoadingDiv.onclick = function () {

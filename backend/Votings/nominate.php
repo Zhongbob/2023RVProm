@@ -9,7 +9,8 @@ function uploadImage($file,$section){
     $target_dir = "../../static/assets/nominees/".$sectionName[$section]."/";
     $baseName = basename($file["name"]);
     $target_file = $target_dir . $baseName;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $fileMimeType = $finfo->file($file["tmp_name"]);
     error_log($_FILES['image']['error']);
     $check = getimagesize($file["tmp_name"]);
     $counter = 1;
@@ -28,7 +29,7 @@ function uploadImage($file,$section){
         exit();
     }
 
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+    if(!in_array($fileMimeType, ['image/jpeg', 'image/png'])) {
         echo json_encode(["success"=>false,"error"=>"Only JPG, JPEG, PNG files are allowed."]);
         exit();
     }
@@ -51,7 +52,7 @@ if (!$userInfo){
     exit();
 }
 
-if (!isset($_POST["guestId"]) || !isset($_POST["nomineeDesc"])){
+if (!isset($_POST["guestId1"]) || !isset($_POST["nomineeDesc"])){
     echo json_encode(["success"=>false,"error"=>"Seems that some fields are not field in. If you think this is an error, Reload the Page or contact rdevcca@gmail.com."]);
     exit();
 }
@@ -61,9 +62,18 @@ if (!isset($_POST["section"]) || $_POST["section"] >= 3 || $_POST["section"] < 0
 }
 
 $image = "";
+$guestId1 = $_POST["guestId1"];
+$guestId2 = 0;
 $section = $_POST["section"];
 if (isset($_FILES["image"])){
     $image = uploadImage($_FILES["image"],$section);
+}
+if ($section == 0){
+    if (!isset($_POST["guestId2"])){
+        echo json_encode(["success"=>false,"error"=>"Seems that some fields are not field in. If you think this is an error, Reload the Page or contact rdevcca@gmail.com."]);
+        exit();
+    }
+    $guestId2 = $_POST["guestId2"];
 }
 $sql = "SELECT COUNT(*) as peopleNominated FROM `votes` WHERE `voterId` = ? AND `category` = ?";
 $stmt = prepared_query($conn, $sql, [$userInfo["userid"],$section], "ii");
@@ -75,15 +85,15 @@ if ($row["peopleNominated"] >= 3){
 }
 mysqli_stmt_close($stmt);
 
-$sql = "INSERT INTO `nominees` (`guestId`,`category`,`image`,`nomineeDesc`,`nominatorId`) VALUES (?,?,?,?,?)";
-$cursor = prepared_query($conn,$sql,[$_POST["guestId"],$section,$image,$_POST["nomineeDesc"],$userInfo["userid"]],"isssi");
+$sql = "INSERT INTO `nominees` (`guestId1`,`guestId2`,`category`,`image`,`nomineeDesc`,`nominatorId`) VALUES (?,?,?,?,?,?)";
+$cursor = prepared_query($conn,$sql,[$guestId1,$guestId2,$section,$image,$_POST["nomineeDesc"],$userInfo["userid"]],"iisssi");
 if ($cursor === false) {
     echo json_encode(["success" => false, "error" => mysqli_error($conn) + " Please contact rdevcca@gmail.com."]);
     exit();
 }
 
-$sql = "INSERT IGNORE INTO `votes` (`guestId`, `voterId`, `category`) VALUES (?, ?, ?)";
-$res = prepared_query($conn,$sql,[$_POST["guestId"],$userInfo["userid"],$section],"iii");
+$sql = "INSERT IGNORE INTO `votes` (`guestId1`,`guestId2`, `voterId`, `category`) VALUES (?, ?, ?,?)";
+$res = prepared_query($conn,$sql,[$guestId1,$guestId2,$userInfo["userid"],$section],"iiii");
 
 echo json_encode(["success"=>true]);
 ?>

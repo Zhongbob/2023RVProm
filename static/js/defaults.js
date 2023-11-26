@@ -1,15 +1,21 @@
 async function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+function convertToFormData(data){
+    let formObject = new FormData()
+    for (const [key,value] of Object.entries(data)){
+        formObject.append(key,value)
+    }
+    return formObject
+
+}
 async function postRequest(destination,data,action,secure,reportError){
     let formObject = new FormData()
     secure = secure ?? true
     data = data ?? {} 
     
     if (!(data instanceof FormData)){
-        for (const [key,value] of Object.entries(data)){
-            formObject.append(key,value)
-        }
+        formObject = convertToFormData(data)
     }
     else{
         formObject = data

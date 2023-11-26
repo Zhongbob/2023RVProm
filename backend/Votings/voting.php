@@ -13,7 +13,7 @@ if (!$userInfo){
     exit();
 }
 
-if (!isset($_POST["guestId"]) || !isset($_POST["vote"])){
+if (!isset($_POST["guestId1"]) || !isset($_POST["vote"])){
     echo json_encode(["success"=>false,"error"=>"Critical Error. Reload the Page or contact rdevcca@gmail.com."]);
     exit();
 }
@@ -23,7 +23,15 @@ if (!isset($_POST["section"]) || $_POST["section"] >= 3 || $_POST["section"] < 0
 }
 
 $section = $_POST["section"];
-$guestId = $_POST["guestId"];
+$guestId1 = $_POST["guestId1"];
+$guestId2 = 0;
+if ($section == 0){
+    if (!isset($_POST["guestId2"])){
+        echo json_encode(["success"=>false,"error"=>"Seems that some fields are not field in. If you think this is an error, Reload the Page or contact  rdevcca@gmail.com."]);
+        exit();
+    } 
+    $guestId2 = $_POST["guestId2"];
+}
 $vote = $_POST["vote"]; // 1 = create, 0 = delete
 if ($vote == 1){
     $sql = "SELECT COUNT(*) as peopleNominated FROM `votes` WHERE `voterId` = ? AND `category` = ?";
@@ -35,8 +43,8 @@ if ($vote == 1){
         exit();
     } 
     mysqli_stmt_close($stmt);
-    $sql = "INSERT INTO `votes` (`guestId`,`voterId`,`category`) VALUES (?,?,?)";
-    $res = prepared_query($conn,$sql,[$guestId,$userInfo["userid"],$section],"iii");
+    $sql = "INSERT INTO `votes` (`guestId1`,`guestId2`,`voterId`,`category`) VALUES (?,?,?,?)";
+    $res = prepared_query($conn,$sql,[$guestId1,$guestId2,$userInfo["userid"],$section],"iiii");
     if ($res === false) {
         echo json_encode(["success" => false, "error" => mysqli_error($conn) + " Please contact rdevcca@gmail.com."]);
         exit();
@@ -44,8 +52,8 @@ if ($vote == 1){
     echo json_encode(["success"=>true]);
 }
 else if ($vote == 0){
-    $sql = "DELETE FROM `votes` WHERE `guestId` = ? AND `voterId` = ? AND `category` = ?";
-    $res = prepared_query($conn,$sql,[$guestId,$userInfo["userid"],$section],"iii");
+    $sql = "DELETE FROM `votes` WHERE `guestId1` = ? AND `guestId2` = ? AND `voterId` = ? AND `category` = ?";
+    $res = prepared_query($conn,$sql,[$guestId1,$guestId2,$userInfo["userid"],$section],"iiii");
     if ($res === false) {
         echo json_encode(["success" => false, "error" => mysqli_error($conn) + " Please contact rdevcca@gmail.com"]);
         exit();}

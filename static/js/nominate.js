@@ -1,271 +1,390 @@
-const nominateButton = document.querySelectorAll('.nominate-button');
-const nominationPopup = document.querySelector('.nomination');
-const nominateUserButton = nominationPopup.querySelector('.nominate');
-const guestList = nominationPopup.querySelector('.guest-list');
-const nameInput = nominationPopup.querySelector('.name');
-const cancelButtons = nominationPopup.querySelectorAll('.cancel');
-var classSelector = nominationPopup.querySelector('.class');
-classSelector = customSelect(classSelector)[0];
-console.log(classSelector)
-var currentClass = "";
-
+const nominateButton = document.querySelectorAll(".nominate-button");
+const nominationPopup = document.querySelector(".nomination");
+const nominateUserButton = nominationPopup.querySelector(".nominate");
+const firstGuest = nominationPopup.querySelector(".first-guest");
+const secondGuest = nominationPopup.querySelector(".second-guest");
+// const nameInput = nominationPopup.querySelector('.name');
+const cancelButtons = nominationPopup.querySelectorAll(".cancel");
+const guestLists = nominationPopup.querySelectorAll(".guest-list");
+// var classSelector = nominationPopup.querySelector('.class');
+// var currentClass = "";
 var nominationSection = -1;
 const idToSection = {
-    "pic": 0,
-    "pk": 1,
-    "pq": 2,
-}
+  pic: 0,
+  pk: 1,
+  pq: 2,
+};
 const sectionToId = {};
 for (const key in idToSection) {
-    sectionToId[idToSection[key]] = key;
+  sectionToId[idToSection[key]] = key;
 }
-var guestData;
-
 var loaded = false;
-
 var guestId = -1;
 
-async function nominateButtonPressed(){
-    
-    if (!loggedIn){
-        nominationPopup.classList.remove('hidden');
-        nominationPopup.querySelector('#main').classList.add('hidden');
-        return
-    }
-    await fetchGuestData();
-    const parentId = this.parentElement.parentElement.id;
-    const nominationCategory = nominationPopup.querySelector('.nomination-type');
-    const remainingCount = nominationPopup.querySelector('.remaining span');
-    nominationCategory.innerText = this.parentElement.querySelector("h2").innerText;
-    nominationSection = idToSection[parentId];
-    
-    if (remainingVotes[nominationSection] <= 0){
-        nominationPopup.querySelector('#main').classList.add('hidden');
-        nominationPopup.querySelector('#max').classList.remove('hidden');
-    }
-    else {
-        nominationPopup.querySelector('#main').classList.remove('hidden');
-        nominationPopup.querySelector('#max').classList.add('hidden');
-    }
-    remainingCount.innerText = remainingVotes[nominationSection];
-    await initaliseClassSelector(nominationSection);
-    nominationPopup.classList.remove('hidden');
+async function nominateButtonPressed() {
+  if (!loggedIn) {
+    nominationPopup.classList.remove("hidden");
+    nominationPopup.querySelector("#main").classList.add("hidden");
+    return;
+  }
+  await fetchGuestData();
+  const parentId = this.parentElement.parentElement.id;
+  const nominationCategory = nominationPopup.querySelector(".nomination-type");
+  const remainingCount = nominationPopup.querySelector(".remaining span");
+  nominationCategory.innerText =
+    this.parentElement.querySelector("h2").innerText;
+  nominationSection = idToSection[parentId];
 
+  if (remainingVotes[nominationSection] <= 0) {
+    nominationPopup.querySelector("#main").classList.add("hidden");
+    nominationPopup.querySelector("#max").classList.remove("hidden");
+  } else {
+    nominationPopup.querySelector("#main").classList.remove("hidden");
+    nominationPopup.querySelector("#max").classList.add("hidden");
+  }
+  if (nominationSection == 0) {
+    secondGuest.classList.remove("hidden");
+
+  }
+  else {
+    secondGuest.classList.add("hidden");
+  }
+  remainingCount.innerText = remainingVotes[nominationSection];
+  await initaliseClassSelector(nominationSection);
+  nominationPopup.classList.remove("hidden");
 }
 
-function hidePopup(){
-    nominationPopup.classList.add('hidden');
+function hidePopup() {
+  nominationPopup.classList.add("hidden");
 }
-async function fetchGuestData(){
-    if (guestData) return;
-    guestData = await getRequest("backend/Votings/guestData.php")
-    return true;
+async function fetchGuestData() {
+  if (guestData) return;
+  guestData = await getRequest("backend/Votings/guestData.php");
+  return true;
 }
 
-async function initaliseClassSelector(section){
-    for (var classOf in guestData){
-        const option = document.createElement("option");
-        option.value = classOf;
-        option.innerText = classOf;
-        classSelector.append(option);
-    }
-    initaliseNameSelector(section);
-    classSelector.select.addEventListener('change', function(){
-        currentClass = this.value;
-        filterByClass(this.value);
+async function initaliseClassSelector(section) {
+  const classSelector1 = firstGuest.querySelector(".class").classInput;
+  const classSelector2 = secondGuest.querySelector(".class").classInput;
+  const uniqueClasses = new Set();
+  for (const guestId in guestData) {
+    const guest = guestData[guestId];
+    uniqueClasses.add(guest["class"]);
+  }
+  const classList = Array.from(uniqueClasses);
+  classList.sort();
+  for (const classOf of classList) {
+    const option = document.createElement("option");
+    option.value = classOf;
+    option.innerText = classOf;
+    classSelector1.append(option);
+    classSelector2.append(option.cloneNode(true));
+  }
+  initaliseNameSelector(section);
+  loaded = true;
+}
+function guestClicked(whichGuest, guest) {
+  whichGuest.dataset.guestId = guest.guestId;
+  const nameSelector = whichGuest.querySelector(".name");
+  const classSelector = whichGuest.querySelector(".class").classInput;
+  const guestList = whichGuest.querySelector(".guest-list");
+  nameSelector.value = guest.name;
+  classSelector.value = guest.class;
+  guestList.classList.add("hidden");
+  disableGuests(whichGuest);
+}
+function addGuest(guestId, name, classOf, nominated) {
+  const guestList1 = firstGuest.querySelector(".guest-list");
+  const guestList2 = secondGuest.querySelector(".guest-list");
+
+  const option = document.createElement("div");
+  option.classList.add("guest");
+  const studentDiv = document.createElement("p");
+  studentDiv.classList.add("guest__name");
+  studentDiv.innerText = name;
+  const classDiv = document.createElement("p");
+  classDiv.classList.add("guest__class");
+  classDiv.innerText = classOf;
+  option.appendChild(studentDiv);
+  option.appendChild(classDiv);
+  option.dataset.guestId = guestId;
+  option.dataset.class = classOf;
+  option.dataset.name = name;
+  if (nominated) option.classList.add("disabled");
+  else {
+    option.addEventListener("click", () =>
+      guestClicked(firstGuest, {
+        guestId: guestId,
+        name: name,
+        class: classOf,
+      })
+    );
+  }
+  guestList1.appendChild(option);
+  const option2 = option.cloneNode(true);
+  option2.addEventListener("click", () =>
+    guestClicked(secondGuest, {
+      guestId: guestId,
+      name: name,
+      class: classOf,
     })
-    loaded = true;
+  );
+  guestList2.appendChild(option2);
+}
+function initaliseNameSelector(section) {
+  const guestList1 = firstGuest.querySelector(".guest-list");
+  const guestList2 = secondGuest.querySelector(".guest-list");
+  guestList1.innerHTML = "";
+  guestList2.innerHTML = "";
+  for (const guestId in guestData) {
+    const guest = guestData[guestId];
+    var alreadyNominated = false;
 
-}
-function guestClicked(){
-    guestId = this.dataset.guestId;
-    const nameSelector = nominationPopup.querySelector('.name');
-    nameSelector.value = this.dataset.name;
-    classSelector.value = this.dataset.class;
-    guestList.classList.add('hidden');
-}
-function addGuest(guestId, name, classOf, nominated){
-    const option = document.createElement("div");
-    option.classList.add("guest");
-    const studentDiv = document.createElement("p");
-    studentDiv.classList.add("guest__name");
-    studentDiv.innerText = name;
-    const classDiv = document.createElement("p");
-    classDiv.classList.add("guest__class");
-    classDiv.innerText = classOf;
-    option.appendChild(studentDiv);
-    option.appendChild(classDiv);
-    option.dataset.guestId = guestId;
-    option.dataset.class = classOf;
-    option.dataset.name = name;
-    if (nominated) option.classList.add("disabled");
-    else{
-        option.addEventListener('click', guestClicked);
-    }
-    guestList.appendChild(option);
-}
-function initaliseNameSelector(section){
-    const guestList = nominationPopup.querySelector('.guest-list');
-    guestList.innerHTML = "";
-    for (const classOf in guestData){
-        guestData[classOf].forEach(([guestId,name]) => {
-            addGuest(guestId,name,classOf,nomineesData[section][guestId]);
-        });
-    }
+    addGuest(
+      guestId,
+      guest["studentName"],
+      guest["class"],
+      section == 0 ? false : nomineesData[section][guestId]
+    );
+  }
 }
 
+function updateNominees(section, nominee) {
+  const nomineeContainer = document
+    .querySelector(`#${sectionToId[section]}`)
+    .querySelector(".nominee__container");
+  const nomineeElement = document.createElement("div");
+  nomineeElement.classList.add("nominee");
 
-function filterByClass(classOf){
-    const guests = nominationPopup.querySelectorAll('.guest');
-    for (const guest of guests){
-        if ((guest.dataset.name.toLowerCase().includes(nameInput.value.toLowerCase()) || nameInput.value == "") &&(guest.dataset.class == classOf || classOf == "")){
-            guest.classList.remove('hidden');
-        }
-        else{
-            guest.classList.add('hidden');
-        }
-    }
+  let imgElement = document.createElement("img");
+  imgElement.src = URL.createObjectURL(nominee["image"]);
+  imgElement.classList.add("nominee__img");
+if (section == 0){
+  nomineeElement.innerHTML = `
+        <div class="nominee-img__container">
+        ${imgElement.outerHTML}
+        <p class="nominee__desc">
+        ${nominee["description"] ? nominee["description"] : ""}
+        </p>
+        <div class = "heart"></div>
+        </div>
+        <p class = "nominee__name">${nominee["studentName1"]} & ${nominee["studentName2"]}</p>
+        <p class = "nominee__table">${nominee["class1"]} || ${nominee["class2"]}</p>
+        `
 }
-
-function updateNominees(section, nominee){
-    const nomineeContainer = document.querySelector(`#${sectionToId[section]}`).querySelector('.nominee__container');
-    const nomineeElement = document.createElement("div");
-    nomineeElement.classList.add("nominee");
-    
-    let imgElement = document.createElement('img');
-imgElement.src = URL.createObjectURL(nominee["image"]);
-imgElement.classList.add('nominee__img');
-
-nomineeElement.innerHTML = `
+  nomineeElement.innerHTML = `
         <div class="nominee-img__container">
 
         ${imgElement.outerHTML}
         <p class="nominee__desc">
-        ${nominee["description"]?nominee["description"]:""}
+        ${nominee["description"] ? nominee["description"] : ""}
         </p>
         <div class = "heart"></div>
         </div>
-        <p class = "nominee__name">${nominee["studentName"]}</p>
-        <p class = "nominee__table">${nominee["class"]}</p>
+        <p class = "nominee__name">${nominee["studentName1"]}</p>
+        <p class = "nominee__table">${nominee["class1"]}</p>
     `;
-if (nominee.voted) nomineeElement.classList.add('voted');
-nomineeElement.dataset.guestId = nominee.guestId;
+  if (nominee.voted) nomineeElement.classList.add("voted");
+  nomineeElement.dataset.guestId1 = nominee.guestId1;
+  nomineeElement.dataset.guestId2 = nominee.guestId2
 
-nomineeElement.addEventListener('click', vote);
+  nomineeElement.addEventListener("click", vote);
 
-// put at the front of the div
-nomineeContainer.insertBefore(nomineeElement, nomineeContainer.firstChild);
-    remainingVotes[section]--;
-    const remainingVotesElement = document.querySelector(`#${sectionToId[section]} .remaining-votes>span`);
-    remainingVotesElement.innerText = remainingVotes[section];
-nomineesData[section][nominee.guestId] = nominee;
-
-
+  // put at the front of the div
+  nomineeContainer.insertBefore(nomineeElement, nomineeContainer.firstChild);
+  remainingVotes[section]--;
+  const remainingVotesElement = document.querySelector(
+    `#${sectionToId[section]} .remaining-votes>span`
+  );
+  remainingVotesElement.innerText = remainingVotes[section];
+  nomineesData[section][nominee.guestId] = nominee;
 }
 
-function resetPopup(){
-    const classOf = nominationPopup.querySelector('.class');
-    const nameSelector = nominationPopup.querySelector('.name');
-    const descriptionSelect = nominationPopup.querySelector('.reason');
-    const imageUpload = nominationPopup.querySelector('#image-upload');
-    imageUpload.value = "";
-    descriptionSelect.value = "";
-    nameSelector.value = "";
-    imagePreview.src = "";
-    imageText.innerHTML = "Upload Image of Student! <br> Recommended Aspect Ratio is 2:3";
+function resetPopup() {
+  const nameSelector1 = firstGuest.querySelector(".name");
+  const nameSelector2 = secondGuest.querySelector(".name");
+  const descriptionSelect = nominationPopup.querySelector(".reason");
+  const imageUpload = nominationPopup.querySelector("#image-upload");
+  imageUpload.value = "";
+  descriptionSelect.value = "";
+  nameSelector1.value = "";
+  nameSelector2.value = "";
+  imagePreview.src = "";
+  imageText.innerHTML =
+    "Upload Image of Student! <br> Recommended Aspect Ratio is 2:3";
 }
-async function nominateUser(){
-    const classOf = nominationPopup.querySelector('.class').value;
-    const nameSelector = nominationPopup.querySelector('.name');
-    const descriptionSelect = nominationPopup.querySelector('.reason');
-    const description = descriptionSelect.value;
-    const imageUpload = nominationPopup.querySelector('#image-upload');
-    const image = imageUpload.files?imageUpload.files[0]:undefined;
-    if (guestId == -1){
-        alert("Please fill in all fields. Ensure you have clicked on a student from the dropdown list.");
-        return;
+async function nominateUser() {
+  const classOf1 = firstGuest.querySelector(".class").value;
+  const name1 = firstGuest.querySelector(".name");
+  const classOf2 = secondGuest.querySelector(".class").value;
+  const name2 = secondGuest.querySelector(".name");
+  const guestId1 = firstGuest.dataset.guestId;
+  const guestId2 = secondGuest.dataset.guestId;
+  const descriptionSelect = nominationPopup.querySelector(".reason");
+  const description = descriptionSelect.value;
+  const imageUpload = nominationPopup.querySelector("#image-upload");
+  var image = imageUpload.files ? imageUpload.files[0] : undefined;
+  if (guestId1 == "") {
+    alert(
+      "Please fill in all fields. Ensure you have clicked on a student from the dropdown list."
+    );
+    return;
+  }
+  if (sectionToId[nominationSection] == "pic") {
+    if (guestId2 == "") {
+      alert(
+        "Please fill in all fields. Ensure you have clicked on a student from the dropdown list."
+      );
+      return;
     }
-    console.log(description)
-    console.log(imageUpload.files)
-    if (description == "" || image == undefined){
-        var res = confirm("Warning: You have not filled in an image or description. You may still vote for this guest, and it will be counted, but it will not be displayed on the website. Would you like to proceed?")
-        if (!res) return;
-        voteUser(guestId, nominationSection, 1);
-        guestId = -1;
-        hidePopup();
-        return;
+    if (guestId1 == guestId2) {
+      alert("You cannot nominate the same student twice!");
+      return;
     }
-    onLoading();
-    var response = await postRequest("backend/Votings/nominate.php", {guestId: guestId, section: nominationSection, nomineeDesc: description, image: image},
-        null);
-    console.log(response)
-    if (response.success){
-        hidePopup();
-        updateNominees(nominationSection,{
-        "guestId":guestId,
-        "class":classOf, 
-        "image":image,
-        "description":description,
-        "studentName":nameSelector.value,
-        "voted":true});
-        onSuccess()
-        nominationSection = -1;
-        guestId = -1;
-        resetPopup();
+  }
+  if (description == "" || image == undefined) {
+    var res = confirm(
+      "Warning: You have not filled in an image or description. You may still vote for this guest, and it will be counted, but it will not be displayed on the website. Would you like to proceed?"
+    );
+    
+    
+    if (!res) return;
+    voteUser(guestId, nominationSection, 1);
+    guestId = -1;
+    hidePopup();
+    return;
+  }
+  console.log(image)
+  image = await compressImage(image, 300, 500)
+  console.log(image)
+  onLoading();
+  var formData = convertToFormData({
+    guestId1: guestId1,
+    guestId2: guestId2,
+    section: nominationSection,
+    nomineeDesc: description,
+  });
+  formData.append("image", image, `${name1.value}${name2.value}.jpg`);
 
-    }
-    else{
-        onErrorMessage(response.error);
-    }
+  var response = await postRequest(
+    "backend/Votings/nominate.php",
+    formData
+    ,
+    null
+  );
+  console.log(response);
+  if (response.success) {
+    hidePopup();
+    updateNominees(nominationSection, {
+      guestId1: guestId1,
+      class1: classOf1,
+      guestId2: guestId2,
+      class2: classOf2,
+      image: image,
+      studentName1: name1.value,
+      studentName2: name2.value,
+      description: description,
+      voted: true,
+    });
+    onSuccess();
+    nominationSection = -1;
+    guestId = -1;
+    resetPopup();
+  } else {
+    onErrorMessage(response.error);
+  }
 }
 
-function filterByName(name){
-    const guests = nominationPopup.querySelectorAll('.guest');
-    for (const guest of guests){
-        if ((guest.dataset.name.toLowerCase().includes(name.toLowerCase()) || name == "") && (guest.dataset.class == currentClass || currentClass == "")){
-            guest.classList.remove('hidden');
-        }
-        else{
-            guest.classList.add('hidden');
-        }
+function toHide(nameInput, classInput, guest) {
+  return (
+    guest.dataset.name.toLowerCase().includes(nameInput.value.toLowerCase()) &&
+    (guest.dataset.class == classInput.value || classInput.value == "")
+  );
+}
+function disableGuests(whichGuest) {
+  if (nominationSection != 0) return
+  const otherGuest = whichGuest == firstGuest ? secondGuest : firstGuest;
+  const guests = otherGuest.querySelectorAll(".guest");
+  const curGuestId = whichGuest.dataset.guestId;
+  console.log(nomineesData)
+  for (const guest of guests) {
+    if (
+      (nomineesData[nominationSection][`${curGuestId}-${guest.dataset.guestId}`] ||
+      nomineesData[nominationSection][`${guest.dataset.guestId}-${curGuestId}`]) ||
+      guest.dataset.guestId == curGuestId
+    ) {
+      guest.classList.add("disabled");
     }
+  }
+}
+function filter(whichGuest) {
+  const guests = whichGuest.querySelectorAll(".guest");
+  const nameInput = whichGuest.querySelector(".name");
+  const classInput = whichGuest.querySelector(".class").classInput;
+  for (const guest of guests) {
+    if (toHide(nameInput, classInput, guest)) {
+      guest.classList.remove("hidden");
+    } else {
+      guest.classList.add("hidden");
+    }
+  }
 }
 
 function debounce(func, wait) {
-    let timeout;
+  let timeout;
 
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(this.value);
-        };
-
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(this.value);
     };
-};
 
-
-for (let i = 0; i < nominateButton.length; i++){
-    nominateButton[i].addEventListener('click', nominateButtonPressed);
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 }
 
+for (let i = 0; i < nominateButton.length; i++) {
+  nominateButton[i].addEventListener("click", nominateButtonPressed);
+}
 
-nominateUserButton.addEventListener('click', nominateUser);
+nominateUserButton.addEventListener("click", nominateUser);
 
-nameInput.addEventListener('input', debounce(filterByName, 500));
+function configureNameInputs(whichGuest) {
+  const otherGuest = whichGuest == firstGuest ? secondGuest : firstGuest;
+  const nameInput = whichGuest.querySelector(".name");
+  const classInput = customSelect(whichGuest.querySelector(".class"))[0];
+  whichGuest.querySelector(".class").classInput = classInput;
+  const guestList = whichGuest.querySelector(".guest-list");
+  const otherGuestList = otherGuest.querySelector(".guest-list");
+  nameInput.addEventListener("input", debounce(()=>filter(whichGuest), 500));
+  classInput.select.addEventListener("change", ()=>filter(whichGuest), );
+  nameInput.addEventListener("focus", function () {
+    guestList.classList.remove("hidden");
+    otherGuestList.classList.add("hidden");
+  });
+}
 
-cancelButtons.forEach((btn)=>btn.addEventListener('click', hidePopup));
+cancelButtons.forEach((btn) => btn.addEventListener("click", hidePopup));
 
-nameInput.addEventListener('focus', function(){
-    guestList.classList.remove('hidden');
-})
-
-nominationPopup.addEventListener('click', function(e){
-    const targetClasses = ["guest__name", "guest__class", "guest", "guest-list", "class", "name"];
-    const isTargetValid = targetClasses.some(className => e.target.classList.contains(className));
-    if (!isTargetValid) {
-        guestList.classList.add('hidden');
+nominationPopup.addEventListener("click", function (e) {
+  const targetClasses = [
+    "guest__name",
+    "guest__class",
+    "guest",
+    "guest-list",
+    "class",
+    "name",
+  ];
+  const isTargetValid = targetClasses.some((className) =>
+    e.target.classList.contains(className)
+  );
+  if (!isTargetValid) {
+    for (const guestList of guestLists) {
+      guestList.classList.add("hidden");
     }
+  }
 });
 
+configureNameInputs(firstGuest);
+configureNameInputs(secondGuest);
