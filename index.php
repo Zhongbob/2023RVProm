@@ -25,10 +25,48 @@ if ($logInInfo && !$guestInfo && !$isAdmin) {
 } else {
     switch ($filename) {
         case "voting":
-            include('templates/voting.tpl.php');
-            break;
+            if ($isAdmin){
+                include('templates/voting.tpl.php');
+                break;
+            }
+            else{
+                include('templates/closed.tpl.php');
+                break;
+            }
         case "ticket":
-            include('templates/ticket.tpl.php');
+            if ($isAdmin){
+                include('templates/adminScanQr.tpl.php');
+            }
+            else{
+                include('templates/ticket.tpl.php');
+            }
+            break;
+        case "attendance":
+            if ($isAdmin){
+                include('templates/attendance.tpl.php');
+            }
+            break;
+        case "votingleaderboard":
+            if ($isAdmin){
+                include('templates/leaderboard.tpl.php');
+            }
+            break;
+        case "pointsleaderboard":
+            if ($isAdmin){
+                include('templates/leaderboardPoints.tpl.php');
+            }
+            break;
+        case "addpoints":
+            if ($isAdmin){
+                include('templates/addPoints.tpl.php');
+            }
+            break;
+        case "scavengerhunt":
+            
+            include('templates/scavengerHunt.tpl.php');
+            break;
+        case "privacypolicy":
+            include('templates/privacyPolicy.tpl.php');
             break;
         default:
             include('templates/home.tpl.php');

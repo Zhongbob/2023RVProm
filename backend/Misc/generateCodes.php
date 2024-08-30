@@ -25,7 +25,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 $sql = "INSERT INTO `guestcodes` (`guestId`, `guestCode`) VALUES (?, ?)";
 foreach ($guests as $guest) {
-    $code = GenerateRandomToken(64);
+    $code = GenerateRandomToken(5);
     $stmt = prepared_query($conn, $sql, [$guest, $code], "is");
     if (!$stmt)
         return false;

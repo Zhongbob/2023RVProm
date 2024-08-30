@@ -1,0 +1,71 @@
+.loading{
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(5px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    width: 100vw;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.loading>.img-container{
+    width: 15em;
+    height: 15em;
+    position:relative;
+    
+}
+.img-container>img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position:absolute;
+    left:0;
+    top:0;
+    
+}
+.img-container>.main-img{
+    clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%);
+    animation:loading 1s ease-in-out forwards;
+}
+
+.img-container>.sub-img{
+    filter:grayscale(100%);
+}
+
+@keyframes loading {
+    from{
+        clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%);
+    }
+    to{
+        clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);
+    }
+}
+
+
+.loading>p{
+    font-size: 1.5rem;
+    
+    color: white;
+    margin-top: 1em;
+    font-weight: bold;
+    padding:0 4em;
+    line-height: 1.5em;
+    text-align: center;
+}
+.fade-out{
+    animation: fadeout 0.5s ease-in-out forwards;
+}
+
+
+@keyframes fadeout {
+    from{
+        opacity: 1;
+    }
+    to{
+        opacity: 0;
+    }
+}

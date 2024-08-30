@@ -1,7 +1,7 @@
 <?php
 $sql = "SELECT `guestId`,`class`,`studentName` FROM `guests`";
 $result = mysqli_query($conn, $sql);
-$guestInfo = ["0"=>["class"=>"","studentName"=>""]];
+$guestInfo = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $guestInfo[$row["guestId"]] = ["class" => $row["class"], "studentName" => $row["studentName"]];
 }
@@ -11,7 +11,7 @@ $sql = "SELECT `guestId1`,`guestId2`,`image`,`category`,`nomineeDesc` FROM `nomi
         ORDER BY RAND()";
 
 $result = mysqli_query($conn, $sql);
-$guestData = [0 => [], 1 => [], 2 => []];
+$guestData = [0 => [], 1 => [], 2 => [], 3 => [], 4 => []];
 while ($row = mysqli_fetch_assoc($result)) {
     (int) $sectionId = $row["category"];
     (int) $guestId1 = $row["guestId1"];
@@ -55,13 +55,13 @@ if ($logInInfo) {
     $maxNominations = 3;
     $sql = "SELECT COUNT(*) as peopleNominated ,`category`  FROM votes WHERE `voterId` = ? GROUP BY `category`";
     $stmt = prepared_query($conn, $sql, [$_SESSION["userid"]], "i");
-    $remainingVotes = [3, 3, 3];
+    $remainingVotes = [3, 3, 3, 3, 3];
     $res = iimysqli_stmt_get_result($stmt);
     while ($row = iimysqli_result_fetch_assoc_array($res)) {
         $remainingVotes[$row["category"]] = $remainingVotes[$row["category"]] - $row["peopleNominated"];
     }
 } else {
-    $remainingVotes = [3, 3, 3];
+    $remainingVotes = [3, 3, 3, 3, 3];
 }
 
 ?>

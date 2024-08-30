@@ -5,7 +5,7 @@ require_once("../Defaults/csrf.php");
 
 
 function uploadImage($file,$section){
-    $sectionName = ["partners-in-crime","prom-king","prom-queen"];
+    $sectionName = ["partners-in-crime","prom-king","prom-queen","best-dressed-male","best-dressed-female"];
     $target_dir = "../../static/assets/nominees/".$sectionName[$section]."/";
     $baseName = basename($file["name"]);
     $target_file = $target_dir . $baseName;
@@ -20,7 +20,7 @@ function uploadImage($file,$section){
     }
 
     while (file_exists($target_file)) {
-        $target_file = $target_dir . $baseName . "_" . $counter . '.' . $imageFileType;
+        $target_file = $target_dir . $baseName . "_" . $counter . '.jpg';
         $counter++;
     }
 
@@ -47,7 +47,7 @@ if (!isset($_POST["csrf_token"])||!validateToken($_POST["csrf_token"])){
 	exit();
 }
 $userInfo = getAccountInfo($conn);
-if (!$userInfo){
+if (!$userInfo || !$userInfo["fromRVHS"]){
     echo json_encode(["success"=>false,"error"=>"You are not logged in. Reload the Page or contact rdevcca@gmail.com."]);
     exit();
 }
@@ -56,7 +56,7 @@ if (!isset($_POST["guestId1"]) || !isset($_POST["nomineeDesc"])){
     echo json_encode(["success"=>false,"error"=>"Seems that some fields are not field in. If you think this is an error, Reload the Page or contact rdevcca@gmail.com."]);
     exit();
 }
-if (!isset($_POST["section"]) || $_POST["section"] >= 3 || $_POST["section"] < 0){
+if (!isset($_POST["section"]) || $_POST["section"] >= 5 || $_POST["section"] < 0){
     echo json_encode(["success"=>false,"error"=>"Section Undefined. Please reload the Page or contact rdevcca@gmail.com."]);
     exit();
 }

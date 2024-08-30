@@ -17,7 +17,7 @@ if (!isset($_POST["guestId1"]) || !isset($_POST["vote"])){
     echo json_encode(["success"=>false,"error"=>"Critical Error. Reload the Page or contact rdevcca@gmail.com."]);
     exit();
 }
-if (!isset($_POST["section"]) || $_POST["section"] >= 3 || $_POST["section"] < 0){
+if (!isset($_POST["section"]) || $_POST["section"] >= 5 || $_POST["section"] < 0){
     echo json_encode(["success"=>false,"error"=>"Section Undefined. Please reload the Page or contact rdevcca@gmail.com."]);
     exit();
 }

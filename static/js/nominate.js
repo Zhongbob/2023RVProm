@@ -13,6 +13,8 @@ const idToSection = {
   pic: 0,
   pk: 1,
   pq: 2,
+  bdm: 3,
+  bdp: 4,
 };
 const sectionToId = {};
 for (const key in idToSection) {
@@ -22,17 +24,18 @@ var loaded = false;
 var guestId = -1;
 
 async function nominateButtonPressed() {
+  const parentId = this.parentElement.parentElement.id;
+  const nominationCategory = nominationPopup.querySelector(".nomination-type");
+  const remainingCount = nominationPopup.querySelector(".remaining span");
+  nominationCategory.innerText =
+    this.parentElement.querySelector("h2").innerText;
   if (!loggedIn) {
     nominationPopup.classList.remove("hidden");
     nominationPopup.querySelector("#main").classList.add("hidden");
     return;
   }
   await fetchGuestData();
-  const parentId = this.parentElement.parentElement.id;
-  const nominationCategory = nominationPopup.querySelector(".nomination-type");
-  const remainingCount = nominationPopup.querySelector(".remaining span");
-  nominationCategory.innerText =
-    this.parentElement.querySelector("h2").innerText;
+  
   nominationSection = idToSection[parentId];
 
   if (remainingVotes[nominationSection] <= 0) {
